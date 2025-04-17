@@ -12,6 +12,8 @@ import loanapp.backend.Entity.UserEntity;
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findByUsername(String username);
 
-    @Query("SELECT u.username,u.email FROM UserEntity u")
+    @Query("SELECT new loanapp.backend.Dtos.UserSecureDto(u.username, u.email) FROM UserEntity u")
     List<UserSecureDto> allUsers();
+    
+    
 }
