@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import Dashboard from '../Dashboard/Dashboard';
+import logo from '../../assets/logo.jpg'; // Adjust the path as necessary
 import { useNavigate } from 'react-router-dom';
 function LoginForm({ switchToRegister }) {
   const [username, setUsername] = useState('');
@@ -14,7 +15,7 @@ function LoginForm({ switchToRegister }) {
 
     try {
       const response = await axios.post(
-        'http://localhost:8080/auth/login',
+        'http://localhost:9090/auth/login',
         {
           username: username,
           password: password
@@ -41,6 +42,7 @@ function LoginForm({ switchToRegister }) {
   return (
     <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
       <div className="text-center mb-6">
+      <img src={logo} alt="Logo" className="mx-auto h-20 mb-2 logo" />
         <h1 className="text-2xl font-bold text-blue-600">LOAN MASTER</h1>
       </div>
 

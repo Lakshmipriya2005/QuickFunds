@@ -13,11 +13,11 @@ function App() {
     <>
     <BrowserRouter>
     <Routes>
-    <Route path="/" element={<Auth />} />
+      <Route path="/" element={<Auth />} />
       <Route  path="/Dashboard"   element={<Dashboard/>} />
       <Route  path="/ResetPassword"   element={<ResetPassword/>} />
     </Routes>
-    <Auth/>
+    
     </BrowserRouter>
      
     </>
