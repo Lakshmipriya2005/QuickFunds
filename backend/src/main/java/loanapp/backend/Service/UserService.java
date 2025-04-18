@@ -22,8 +22,12 @@ public class UserService {
 
     public String register(UserDto dto) {
         if (userRepository.findByUsername(dto.getUsername()).isPresent()) {
-            throw new RuntimeException("User already exists");
+            return "User already exists";
         }
+        if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
+            return"Email already exists";
+        }
+
         UserEntity user = new UserEntity();
         UserDto usersecDto = new UserDto();
         usersecDto.setUsername(dto.getUsername());
@@ -34,7 +38,6 @@ public class UserService {
         userRepository.save(user);
         return "User registered successfully!";
     }
-
     public String authenticate(String username, String password) {
         UserEntity user = userRepository.findByUsername(username)
                 .orElse( null);
