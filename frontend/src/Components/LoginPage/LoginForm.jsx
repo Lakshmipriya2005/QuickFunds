@@ -1,105 +1,123 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import axios from 'axios';
+import Dashboard from '../Dashboard/Dashboard';
+import { useNavigate } from 'react-router-dom';
 function LoginForm({ switchToRegister }) {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [rememberMe, setRememberMe] = useState(false);
-    const [showError, setShowError] = useState(false);
-  
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      
-      // Simple validation - in a real system, you would make an API call
-      if (username === 'admin' && password === 'password') {
-        // Redirect to dashboard (would use React Router in a real app)
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const navigate=useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        'http://localhost:8080/auth/login',
+        {
+          username: username,
+          password: password
+        },
+        {
+          withCredentials: true // For session cookie
+        }
+      );
+
+      if (response.status === 200) {
         console.log('Login successful');
-        window.location.href = '#/dashboard';
-      } else {
-        setShowError(true);
+        navigate("/Dashboard") // You can also use useNavigate here
       }
-    };
-  
-    return (
-      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
-        <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold text-blue-600">LOAN MASTER</h1>
-        </div>
-        
-        <h2 className="text-xl text-center text-gray-700 mb-6">Sign in to your account</h2>
-        
-        {showError && (
-          <div className="bg-red-100 text-red-600 p-3 rounded-md mb-4 text-sm">
-            Incorrect username or password. Please try again.
-          </div>
-        )}
-        
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label 
-              htmlFor="username" 
-              className="block text-sm font-medium text-gray-600 mb-2"
-            >
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-          </div>
-          
-          <div className="mb-4">
-            <label 
-              htmlFor="password" 
-              className="block text-sm font-medium text-gray-600 mb-2"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          
-          <div className="flex justify-end mb-2">
-            <a href="#" className="text-sm text-blue-600 hover:underline">
-              Forgot password?
-            </a>
-          </div>
-          
-          <div className="flex items-center mb-6">
-            <input
-              type="checkbox"
-              id="remember"
-              className="mr-2"
-              checked={rememberMe}
-              onChange={(e) => setRememberMe(e.target.checked)}
-            />
-            <label htmlFor="remember" className="text-sm text-gray-600">
-              Remember me
-            </label>
-          </div>
-          
-          <button
-            type="submit"
-            className="w-full py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            Sign In
-          </button>
-        </form>
-        
-        <p className="text-center mt-6 text-sm text-gray-600">
-          Don't have an account? <button onClick={switchToRegister} className="text-blue-600 font-medium hover:underline">Register now</button>
-        </p>
-      </div>
-    );
+    } catch (error) {
+      
+      console.error('Login failed:', error);
+      setShowError(true);
+    }
+  };
+  const handleForgetPassword=()=>{
+    navigate("/ResetPassword")
   }
-export default LoginForm
+
+  return (
+    <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
+      <div className="text-center mb-6">
+        <h1 className="text-2xl font-bold text-blue-600">LOAN MASTER</h1>
+      </div>
+
+      <h2 className="text-xl text-center text-gray-700 mb-6">Sign in to your account</h2>
+
+      {showError && (
+        <div className="bg-red-100 text-red-600 p-3 rounded-md mb-4 text-sm">
+          Incorrect username or password. Please try again.
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label htmlFor="username" className="block text-sm font-medium text-gray-600 mb-2">
+            Username
+          </label>
+          <input
+            type="text"
+            id="username"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="password" className="block text-sm font-medium text-gray-600 mb-2">
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="flex justify-end mb-2">
+          <p className="text-sm text-blue-600 hover:underline" onClick={handleForgetPassword}>
+            Forgot password?
+          </p>
+        </div>
+
+        <div className="flex items-center mb-6">
+          <input
+            type="checkbox"
+            id="remember"
+            className="mr-2"
+            checked={rememberMe}
+            onChange={(e) => setRememberMe(e.target.checked)}
+          />
+          <label htmlFor="remember" className="text-sm text-gray-600">
+            Remember me
+          </label>
+        </div>
+
+        <button
+          type="submit"
+          className="w-full py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          Sign In
+        </button>
+      </form>
+
+      <p className="text-center mt-6 text-sm text-gray-600">
+        Don't have an account?{' '}
+        <button onClick={switchToRegister} className="text-blue-600 font-medium hover:underline">
+          Register now
+        </button>
+      </p>
+    </div>
+  );
+}
+
+export default LoginForm;
