@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import logo from '../../assets/logo.jpg'; // Adjust the path as necessary
+import { useEffect } from 'react';
+import logo from '../../assets/logo.jpg'; // Adjust the path to your logo image
 function RegisterForm({ switchToLogin }) {
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -12,6 +12,7 @@ function RegisterForm({ switchToLogin }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     setError('');
     setSuccess('');
 
@@ -32,10 +33,9 @@ function RegisterForm({ switchToLogin }) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name,
-          phone,
-          email,
           username,
+          email,
+        
           password,
         }),
       });
@@ -43,23 +43,26 @@ function RegisterForm({ switchToLogin }) {
       if (response.ok) {
         setSuccess('Registration successful! Please log in.');
         setTimeout(() => {
-          switchToLogin();
+          switchToLogin(); // Navigate to login form
         }, 1500);
       } else {
-        const data = await response.text();
-        setError(data || 'Registration failed. Please try again.');
+        const data = await response.json();
+        setError(data.message || 'Registration failed');
       }
     } catch (err) {
       console.error('Error:', err);
-      setError('User credentials already exist!');
+      setError('User Crediantials already exists!');
     }
   };
+  useEffect(() => {
+    console.log("Cookies after signup:", document.cookie);
+  }, [success]); // Runs after successful registration
+  
 
   return (
     <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
       <div className="text-center mb-6">
       <img src={logo} alt="Logo" className="mx-auto h-20 mb-2 logo" />
-        
         <h1 className="text-2xl font-bold text-blue-600">LOAN MASTER</h1>
       </div>
 
@@ -78,7 +81,8 @@ function RegisterForm({ switchToLogin }) {
       )}
 
       <form onSubmit={handleSubmit}>
-        {/* Email */}
+       
+
         <div className="mb-4">
           <label htmlFor="email" className="block text-sm font-medium text-gray-600 mb-2">
             Email Address
@@ -94,7 +98,6 @@ function RegisterForm({ switchToLogin }) {
           />
         </div>
 
-        {/* Username */}
         <div className="mb-4">
           <label htmlFor="regUsername" className="block text-sm font-medium text-gray-600 mb-2">
             Username
@@ -110,7 +113,6 @@ function RegisterForm({ switchToLogin }) {
           />
         </div>
 
-        {/* Password */}
         <div className="mb-4">
           <label htmlFor="regPassword" className="block text-sm font-medium text-gray-600 mb-2">
             Password
@@ -127,7 +129,6 @@ function RegisterForm({ switchToLogin }) {
           />
         </div>
 
-        {/* Confirm Password */}
         <div className="mb-6">
           <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-600 mb-2">
             Confirm Password
@@ -143,7 +144,6 @@ function RegisterForm({ switchToLogin }) {
           />
         </div>
 
-        {/* Submit Button */}
         <button
           type="submit"
           className="w-full py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"

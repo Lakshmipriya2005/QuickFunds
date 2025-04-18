@@ -1,12 +1,14 @@
 import { useState } from 'react';
-import logo from '../../assets/logo.jpg'; 
 import axios from 'axios';
-
+import Dashboard from '../Dashboard/Dashboard';
+import logo from '../../assets/logo.jpg'; // Adjust the path as necessary
+import { useNavigate } from 'react-router-dom';
 function LoginForm({ switchToRegister }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [showError, setShowError] = useState(false);
+  const navigate=useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,18 +27,22 @@ function LoginForm({ switchToRegister }) {
 
       if (response.status === 200) {
         console.log('Login successful');
-        window.location.href = '/dashboard'; // You can also use useNavigate here
+        navigate("/Dashboard") // You can also use useNavigate here
       }
     } catch (error) {
+      
       console.error('Login failed:', error);
       setShowError(true);
     }
   };
+  const handleForgetPassword=()=>{
+    navigate("/ResetPassword")
+  }
 
   return (
     <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
       <div className="text-center mb-6">
-        <img src={logo} alt="Logo" className="mx-auto h-20 mb-2 logo" />
+      <img src={logo} alt="Logo" className="mx-auto h-20 mb-2 logo" />
         <h1 className="text-2xl font-bold text-blue-600">LOAN MASTER</h1>
       </div>
 
@@ -80,9 +86,9 @@ function LoginForm({ switchToRegister }) {
         </div>
 
         <div className="flex justify-end mb-2">
-          <a href="#" className="text-sm text-blue-600 hover:underline">
+          <p className="text-sm text-blue-600 hover:underline" onClick={handleForgetPassword}>
             Forgot password?
-          </a>
+          </p>
         </div>
 
         <div className="flex items-center mb-6">

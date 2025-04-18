@@ -22,10 +22,10 @@ public class UserService {
 
     public String register(UserDto dto) {
         if (userRepository.findByUsername(dto.getUsername()).isPresent()) {
-            throw new  RuntimeException( "User already exists");
+            return "User already exists";
         }
         if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
-            throw new  RuntimeException( "Email already exists");
+            return"Email already exists";
         }
 
         UserEntity user = new UserEntity();
@@ -42,15 +42,17 @@ public class UserService {
         UserEntity user = userRepository.findByUsername(username)
                 .orElse( null);
         if (user == null) {
-            throw new  RuntimeException ("User not found");
+            throw new RuntimeException("Username not found");
         }
         if (passwordEncoder.matches(password, user.getPassword())) {
             return "Logged In Successfully ";
         } else {
-            throw new  RuntimeException ("Invalid Password");
+            throw new RuntimeException("Invalid password");
         }
     }
+
     public List<UserSecureDto> getAll() {
         return userRepository.allUsers();
     }
+
 }
