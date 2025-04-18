@@ -42,12 +42,12 @@ public class UserService {
         UserEntity user = userRepository.findByUsername(username)
                 .orElse( null);
         if (user == null) {
-            return "User not found";
+            throw new RuntimeException("Username not found");
         }
         if (passwordEncoder.matches(password, user.getPassword())) {
             return "Logged In Successfully ";
         } else {
-            return "Invalid Password";
+            throw new RuntimeException("Invalid password");
         }
     }
 

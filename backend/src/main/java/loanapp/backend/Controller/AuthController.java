@@ -13,11 +13,14 @@ import loanapp.backend.Dtos.UserDto;
 import loanapp.backend.Dtos.UserSecureDto;
 
 import loanapp.backend.Service.UserService;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 @RequestMapping("/auth")
 public class AuthController {
 
