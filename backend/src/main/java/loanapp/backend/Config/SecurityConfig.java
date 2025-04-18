@@ -1,5 +1,4 @@
 package loanapp.backend.Config;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,7 +24,7 @@ public class SecurityConfig {
             .requestMatchers("/auth/**").permitAll()
             .anyRequest().authenticated()
             .and()
-            .httpBasic();
+            .httpBasic().disable();
         return http.build();
     }
 }
