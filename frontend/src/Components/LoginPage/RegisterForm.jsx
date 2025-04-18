@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
+import logo from '../../assets/logo.jpg'; // Adjust the path to your logo image
 function RegisterForm({ switchToLogin }) {
 
   const [email, setEmail] = useState('');
@@ -26,7 +27,7 @@ function RegisterForm({ switchToLogin }) {
     }
 
     try {
-      const response = await fetch('http://localhost:8080/auth/signup', {
+      const response = await fetch('http://localhost:9090/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -61,6 +62,7 @@ function RegisterForm({ switchToLogin }) {
   return (
     <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
       <div className="text-center mb-6">
+      <img src={logo} alt="Logo" className="mx-auto h-20 mb-2 logo" />
         <h1 className="text-2xl font-bold text-blue-600">LOAN MASTER</h1>
       </div>
 
