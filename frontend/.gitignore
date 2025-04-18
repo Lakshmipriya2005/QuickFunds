@@ -1,5 +1,7 @@
 !**/node_modules
-!**/!**/vscode
+# Ignore all node_modules folders
+
+
 # Logs
 logs
 *.log

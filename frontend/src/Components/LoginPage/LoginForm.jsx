@@ -15,7 +15,7 @@ function LoginForm({ switchToRegister }) {
 
     try {
       const response = await axios.post(
-        'http://localhost:9090/auth/login',
+        'http://localhost:8080/auth/login',
         {
           username: username,
           password: password
@@ -26,7 +26,7 @@ function LoginForm({ switchToRegister }) {
       );
 
       if (response.status === 200) {
-        console.log('Login successful');
+        window.alert('Login successful');
         navigate("/Dashboard") // You can also use useNavigate here
       }
     } catch (error) {
