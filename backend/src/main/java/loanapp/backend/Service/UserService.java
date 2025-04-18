@@ -22,10 +22,10 @@ public class UserService {
 
     public String register(UserDto dto) {
         if (userRepository.findByUsername(dto.getUsername()).isPresent()) {
-            return "User already exists";
+            throw new RuntimeException ("User already exists");
         }
         if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
-            return"Email already exists";
+            throw new RuntimeException("Email already exists");
         }
 
         UserEntity user = new UserEntity();
