@@ -27,6 +27,7 @@ function LoginForm({ switchToRegister }) {
 
       if (response.status === 200) {
         window.alert('Login successful');
+        console.log("cookies",document.cookie)
         navigate("/Dashboard") // You can also use useNavigate here
       }
     } catch (error) {
