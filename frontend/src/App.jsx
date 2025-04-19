@@ -20,7 +20,6 @@ function App() {
       <Route  path="/Dashboard"   element={<Dashboard/>} />
       <Route  path="/ResetPassword"   element={<ResetPassword/>} />
     </Routes>
-    
     </BrowserRouter>
      
     </>
