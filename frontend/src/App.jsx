@@ -4,6 +4,8 @@ import "../src/Components/LoginPage/Style.css"
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Dashboard from './Components/Dashboard/Dashboard'
 import ResetPassword from './Components/LoginPage/ResetPassword'
+import './App.css'
+import Home  from "./Components/Home/Home"
 
 
 function App() {
@@ -16,6 +18,7 @@ function App() {
       <Route path="/" element={<Auth />} />
       <Route  path="/Dashboard"   element={<Dashboard/>} />
       <Route  path="/ResetPassword"   element={<ResetPassword/>} />
+      <Route  path="/Home"   element={<Home/>} />
     </Routes>
     
     </BrowserRouter>

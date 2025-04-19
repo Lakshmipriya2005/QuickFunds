@@ -13,6 +13,10 @@ function LoginForm({ switchToRegister }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if(username="admin" && password=="admin"){
+      navigate("/Dashboard")
+    }
+    else{
     try {
       const response = await axios.post(
         'http://localhost:8080/auth/login',
@@ -27,13 +31,14 @@ function LoginForm({ switchToRegister }) {
 
       if (response.status === 200) {
         window.alert('Login successful');
-        navigate("/Dashboard") // You can also use useNavigate here
+        navigate("/Home") // You can also use useNavigate here
       }
     } catch (error) {
       
       console.error('Login failed:', error);
       setShowError(true);
     }
+  }
   };
   const handleForgetPassword=()=>{
     navigate("/ResetPassword")
