@@ -33,12 +33,12 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UserDto userDto) {
-       String response= userService.authenticate(userDto.getUsername(), userDto.getPassword());
+       String response = userService.authenticate(userDto.getUsername(), userDto.getPassword());
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/")
-    public List<UserSecureDto> getAll() {
+    public List<UserSecureDto> getAll(){
 
         return userService.getAll();
     }
