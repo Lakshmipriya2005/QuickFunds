@@ -25,15 +25,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+            .cors() // ✅ Enable CORS
+            .and()
             .csrf().disable()
             .authorizeHttpRequests()
-            .requestMatchers("/users/**","/loan/**").permitAll()
+            .requestMatchers( "/loan/**", "/auth/**").permitAll()
             .anyRequest().authenticated()
             .and()
-            .httpBasic().disable(); // optional: can disable this if you're handling auth manually
-
+            .httpBasic().disable(); // optional, depending on your auth method
+    
         return http.build();
     }
+    
 
     // ✅ CORS configuration to allow frontend (localhost:5173) and support credentials
     @Bean
