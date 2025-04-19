@@ -17,25 +17,25 @@ export default function Home() {
           </div>
 
           <nav className="hidden md:flex items-center space-x-6">
-            <Link href="/Home" className="hover:text-gray-300 transition-colors">
+            <Link to="/Home" className="hover:text-gray-300 transition-colors">
               Home
             </Link>
-            <Link href="/ApplyLoan" className="hover:text-gray-300 transition-colors">
+            <Link to="/ApplyLoan" className="hover:text-gray-300 transition-colors">
               Apply Loan
             </Link>
-            <Link href="/LoanCalculator" className="hover:text-gray-300 transition-colors">
+            <Link to="/LoanCalculator" className="hover:text-gray-300 transition-colors">
               Loan Calculator
             </Link>
-            <Link href="/Status" className="hover:text-gray-300 transition-colors">
+            <Link to="/Status" className="hover:text-gray-300 transition-colors">
               Status
             </Link>
-            <Link href="/About" className="hover:text-gray-300 transition-colors">
+            <Link to="/About" className="hover:text-gray-300 transition-colors">
               About Us
             </Link>
-            <Link href="/Contact" className="hover:text-gray-300 transition-colors">
+            <Link to="/Contact" className="hover:text-gray-300 transition-colors">
               Contact
             </Link>
-            <Link href="/profile" className="hover:text-gray-300 transition-colors">
+            <Link to="/profile" className="hover:text-gray-300 transition-colors">
               <User className="h-5 w-5" />
             </Link>
           </nav>
@@ -70,7 +70,7 @@ export default function Home() {
                   rates and flexible repayment options.
                 </p>
                 <Link
-                  href="/ApplyLoan"
+                  to="/ApplyLoan"
                   className="inline-block bg-black text-white px-6 py-3 rounded hover:bg-gray-200 transition-colors"
                 >
                   Apply Now
@@ -143,13 +143,13 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Link
-                href="/ApplyLoan"
+                to="/ApplyLoan"
                 className="bg-white text-black px-6 py-3 rounded hover:bg-gray-200 transition-colors"
               >
                 Apply for a Loan
               </Link>
               <Link
-                href="/LoanCalculator"
+                to="/LoanCalculator"
                 className="border border-white px-6 py-3 rounded hover:bg-white hover:text-black transition-colors"
               >
                 Calculate Your Loan
@@ -169,16 +169,16 @@ export default function Home() {
                 Providing financial solutions since 2010. We're committed to helping you achieve your financial goals.
               </p>
               <div className="flex space-x-4">
-                <Link href="#" className="text-white hover:text-gray-300">
+                <Link to="#" className="text-white hover:text-gray-300">
                   <Facebook className="h-5 w-5" />
                 </Link>
-                <Link href="#" className="text-white hover:text-gray-300">
+                <Link to="#" className="text-white hover:text-gray-300">
                   <Twitter className="h-5 w-5" />
                 </Link>
-                <Link href="#" className="text-white hover:text-gray-300">
+                <Link to="#" className="text-white hover:text-gray-300">
                   <Instagram className="h-5 w-5" />
                 </Link>
-                <Link href="#" className="text-white hover:text-gray-300">
+                <Link to="#" className="text-white hover:text-gray-300">
                   <Linkedin className="h-5 w-5" />
                 </Link>
               </div>
@@ -198,22 +198,22 @@ export default function Home() {
               <h3 className="text-xl font-bold mb-4">Quick Links</h3>
               <ul className="space-y-2">
                 <li>
-                  <Link href="/About" className="text-gray-400 hover:text-white">
+                  <Link to="/About" className="text-gray-400 hover:text-white">
                     About Us
                   </Link>
                 </li>
                 <li>
-                  <Link href="/LoanCalculator" className="text-gray-400 hover:text-white">
+                  <Link to="/LoanCalculator" className="text-gray-400 hover:text-white">
                     Loan Calculator
                   </Link>
                 </li>
                 <li>
-                  <Link href="/Status" className="text-gray-400 hover:text-white">
+                  <Link to="/Status" className="text-gray-400 hover:text-white">
                     Check Loan Status
                   </Link>
                 </li>
                 <li>
-                  <Link href="/Contact" className="text-gray-400 hover:text-white">
+                  <Link to="/Contact" className="text-gray-400 hover:text-white">
                     Contact Us
                   </Link>
                 </li>
