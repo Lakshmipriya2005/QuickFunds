@@ -8,7 +8,7 @@ import './App.css'
 import Home from './Components/Home/Home'
 import Status from './Components/Status/Status'
 import LoanCalculator from './Components/Calculator/LoanCalculator'
-import { Contact } from 'lucide-react'
+import  Contact  from './Components/Contact/Contact'
 import ApplyLoan from './Components/ApplyLoan/ApplyLoan'
 import About from './Components/About/About'
 
