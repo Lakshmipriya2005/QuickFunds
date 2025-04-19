@@ -32,7 +32,14 @@ public class SecurityConfig {
             .requestMatchers( "/loan/**", "/auth/**").permitAll()
             .anyRequest().authenticated()
             .and()
-            .httpBasic().disable(); // optional, depending on your auth method
+            .rememberMe()
+            .key("uniqueAndSecret")
+            .tokenValiditySeconds(24 * 60 * 60)
+            .and()
+            .httpBasic().disable()
+            .sessionManagement()
+            .maximumSessions(10);
+            // optional, depending on your auth method
     
         return http.build();
     }

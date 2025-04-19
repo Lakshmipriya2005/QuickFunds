@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.RestController;
 
 import loanapp.backend.Dtos.UserDto;
@@ -32,8 +33,9 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserDto userDto) {
+    public ResponseEntity<String> login(@RequestBody UserDto userDto, HttpServletRequest request) {
        String response = userService.authenticate(userDto.getUsername(), userDto.getPassword());
+       request.getSession(true);
         return ResponseEntity.ok(response);
     }
 

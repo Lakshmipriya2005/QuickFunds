@@ -34,6 +34,7 @@ function LoginForm({ switchToRegister }) {
 
       if (response.status === 200) {
         window.alert('Login successful');
+        console.log("cookies :" ,document.cookie);
         navigate("/Home") // You can also use useNavigate here
       }
     } catch (error) {
