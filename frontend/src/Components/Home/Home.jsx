@@ -83,13 +83,13 @@ export default function Home() {
             <div className="w-full md:w-1/2 bg-white text-black flex items-center justify-center p-8 relative">
    
 
-<img 
-  src={logo}
-  alt="Logo" 
-  width={400}
-  height={400}
-  className="object-cover rounded-lg shadow-lg"
-/>
+            <img 
+              src={logo}
+              alt="Logo" 
+              width={400}
+              height={400}
+              className="object-cover rounded-lg shadow-lg"
+            />
 
               
             </div>
