@@ -51,7 +51,7 @@ function LoginForm({ switchToRegister }) {
     <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
       <div className="text-center mb-6">
       <img src={logo} alt="Logo" className="mx-auto h-20 mb-2 logo" />
-        <h1 className="text-2xl font-bold text-blue-600">QUICK FUNDS</h1>
+        <h1 className="text-2xl font-bold text-gray-600">QUICK FUNDS</h1>
       </div>
 
       <h2 className="text-xl text-center text-gray-700 mb-6">Sign in to your account</h2>
@@ -94,7 +94,7 @@ function LoginForm({ switchToRegister }) {
         </div>
 
         <div className="flex justify-end mb-2">
-          <p className="text-sm text-blue-600 hover:underline" onClick={handleForgetPassword}>
+          <p className="text-sm text-gray-600 hover:underline" onClick={handleForgetPassword}>
             Forgot password?
           </p>
         </div>
@@ -114,7 +114,7 @@ function LoginForm({ switchToRegister }) {
 
         <button
           type="submit"
-          className="w-full py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full py-3 bg-black text-white font-medium rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
         >
           Sign In
         </button>
@@ -122,7 +122,7 @@ function LoginForm({ switchToRegister }) {
 
       <p className="text-center mt-6 text-sm text-gray-600">
         Don't have an account?{' '}
-        <button onClick={switchToRegister} className="text-blue-600 font-medium hover:underline">
+        <button onClick={switchToRegister} className="text-gray-600 font-medium hover:underline">
           Register now
         </button>
       </p>
