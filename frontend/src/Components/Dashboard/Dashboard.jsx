@@ -57,9 +57,9 @@ function Dashboard() {
           
           <div className="flex items-center space-x-4">
             <nav className="hidden md:flex space-x-6">
-              <Link href="#" className="text-gray-600 hover:text-gray-800">Dashboard</Link>
-              <Link href="#" className="text-gray-600 hover:text-gray-800">Loan Calculator</Link>
-              <Link href="#" className="text-gray-600 hover:text-gray-800">Status</Link>
+              <Link href="/Dashboard" className="text-gray-600 hover:text-gray-800">Dashboard</Link>
+              <Link href="/LoanCalculator" className="text-gray-600 hover:text-gray-800">Loan Calculator</Link>
+              <Link href="/Status" className="text-gray-600 hover:text-gray-800">Status</Link>
            
             </nav>
             

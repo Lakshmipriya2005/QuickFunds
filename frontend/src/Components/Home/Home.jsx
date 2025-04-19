@@ -17,7 +17,7 @@ export default function Home() {
           </div>
 
           <nav className="hidden md:flex items-center space-x-6">
-            <Link href="/" className="hover:text-gray-300 transition-colors">
+            <Link href="/Home" className="hover:text-gray-300 transition-colors">
               Home
             </Link>
             <Link href="/ApplyLoan" className="hover:text-gray-300 transition-colors">
