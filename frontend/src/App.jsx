@@ -12,13 +12,14 @@ import  Contact  from './Components/Contact/Contact'
 import ApplyLoan from './Components/ApplyLoan/ApplyLoan'
 import About from './Components/About/About'
 
-
+//import Layout from "./Layout";
 function App() {
 
 
   return (
     <>
     <BrowserRouter>
+    
     <Routes>
       <Route path="/" element={<Auth />} />
       <Route  path="/Home"   element={<Home/>} />
@@ -31,6 +32,7 @@ function App() {
       <Route  path="/ApplyLoan"   element={<ApplyLoan/>} />
       <Route  path="/About"   element={<About/>} />
     </Routes>
+    
     </BrowserRouter>
      
     </>
