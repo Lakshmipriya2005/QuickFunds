@@ -1,6 +1,7 @@
 
 
 import { useState } from "react"
+import Layout from "../../Layout"
 
 export default function LoanApplicationForm() {
   const [formData, setFormData] = useState({
@@ -50,6 +51,9 @@ export default function LoanApplicationForm() {
   }
 
   return (
+  <>
+  <Layout>
+   
     <div className="flex justify-center items-center min-h-screen bg-white p-4">
       <div className="w-full max-w-2xl border border-black rounded-lg overflow-hidden">
         <div className="bg-black text-white p-6">
@@ -226,5 +230,8 @@ export default function LoanApplicationForm() {
         </form>
       </div>
     </div>
+    </Layout>
+    </>
+    
   )
 }
