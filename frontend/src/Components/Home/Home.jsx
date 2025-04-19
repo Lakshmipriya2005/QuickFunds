@@ -9,10 +9,10 @@ export default function Home() {
       <header className="w-full bg-white text-black py-4 px-6">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex items-center">
-            <Link href="/" className="text-2xl  font-bold flex items-center">
+            <Link href="/Home" className="text-2xl  font-bold flex items-center">
              
              <img src={logo} alt="Logo" className="mx-auto h-20 mb-2 logo1" />
-              <span className="text-blue-500">  LOAN MASTER</span>
+              <span className="text-blue-500">  QUICK FUNDS</span>
             </Link>
           </div>
 
@@ -223,7 +223,7 @@ export default function Home() {
             <div>
               <h3 className="text-xl font-bold mb-4">Contact Info</h3>
               <ul className="space-y-2 text-gray-400">
-                <li>Email: loanmaster@gamil.com</li>
+                <li>Email: quickfunds@gamil.com</li>
                 <li>Phone: (123) 456-7890</li>
                 <li>Hours: Mon-Fri 9AM-5PM</li>
               </ul>

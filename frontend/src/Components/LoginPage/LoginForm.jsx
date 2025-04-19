@@ -51,7 +51,7 @@ function LoginForm({ switchToRegister }) {
     <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
       <div className="text-center mb-6">
       <img src={logo} alt="Logo" className="mx-auto h-20 mb-2 logo" />
-        <h1 className="text-2xl font-bold text-blue-600">LOAN MASTER</h1>
+        <h1 className="text-2xl font-bold text-blue-600">QUICK FUNDS</h1>
       </div>
 
       <h2 className="text-xl text-center text-gray-700 mb-6">Sign in to your account</h2>

@@ -50,16 +50,20 @@ function Dashboard() {
         {/* Header */}
         <header className="flex justify-between items-center mb-8">
           <div className="flex items-center">
-          <div className="logo1">
-             <img src={logo} alt="Logo" className="mx-auto h-20 mb-2 logo1" />
-            </div>
+          <div className="flex items-center">
+                     <Link href="/Dashboard" className="text-2xl  font-bold flex items-center">
+                      
+                      <img src={logo} alt="Logo" className="mx-auto h-20 mb-2 logo1" />
+                       <span className="text-blue-500">  QUICK FUNDS</span>
+                     </Link>
+                   </div>
           </div>
           
           <div className="flex items-center space-x-4">
             <nav className="hidden md:flex space-x-6">
-              <Link href="/Dashboard" className="text-gray-600 hover:text-gray-800">Dashboard</Link>
-              <Link href="/LoanCalculator" className="text-gray-600 hover:text-gray-800">Loan Calculator</Link>
-              <Link href="/Status" className="text-gray-600 hover:text-gray-800">Status</Link>
+              <Link to="/Dashboard" className="text-gray-600 hover:text-gray-800">Dashboard</Link>
+              <Link to="/LoanCalculator" className="text-gray-600 hover:text-gray-800">Loan Calculator</Link>
+              <Link to="/Status" className="text-gray-600 hover:text-gray-800">Status</Link>
            
             </nav>
             
