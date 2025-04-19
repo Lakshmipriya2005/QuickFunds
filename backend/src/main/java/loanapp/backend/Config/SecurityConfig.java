@@ -26,23 +26,11 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .csrf().disable()
-            .cors().and() // ✅ Enable CORS support
             .authorizeHttpRequests()
-            .requestMatchers("/auth/**", "/loan/**").permitAll()
+            .requestMatchers("/users/**","/loan/**").permitAll()
             .anyRequest().authenticated()
             .and()
-            .formLogin()
-                .loginProcessingUrl("/auth/login")
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .defaultSuccessUrl("/dashboard", true)
-                .permitAll()
-            .and()
-            .logout()
-                .logoutUrl("/auth/logout")
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .permitAll();
+            .httpBasic().disable(); // optional: can disable this if you're handling auth manually
 
         return http.build();
     }
