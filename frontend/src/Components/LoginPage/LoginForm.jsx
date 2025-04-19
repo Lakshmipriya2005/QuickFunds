@@ -1,22 +1,25 @@
 import { useState } from 'react';
 import axios from 'axios';
-import Dashboard from '../Dashboard/Dashboard';
+
 import logo from '../../assets/logo.jpg'; // Adjust the path as necessary
 import { useNavigate } from 'react-router-dom';
+
 function LoginForm({ switchToRegister }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [showError, setShowError] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
   const navigate=useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if(username="admin" && password=="admin"){
-      navigate("/Dashboard")
-    }
-    else{
+   if(username=="admin" && password=="admin"){
+    window.alert('Login successful');
+    navigate("/Dashboard") 
+     
+   }
+   else{
     try {
       const response = await axios.post(
         'http://localhost:8080/auth/login',

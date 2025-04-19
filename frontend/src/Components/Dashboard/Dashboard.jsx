@@ -1,7 +1,7 @@
 import React from 'react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Search } from 'lucide-react';
-import logo from '../../assets/logo.jpg'; // Adjust the path to your logo image
+import logo from '../../assets/logo.jpg'; // Adjust the path to your logo
 
 // Mock data for charts
 const lineChartData = [
@@ -49,7 +49,7 @@ function Dashboard() {
         {/* Header */}
         <header className="flex justify-between items-center mb-8">
           <div className="flex items-center">
-            <div className="logo1">
+          <div className="logo1">
              <img src={logo} alt="Logo" className="mx-auto h-20 mb-2 logo1" />
             </div>
           </div>
@@ -57,11 +57,9 @@ function Dashboard() {
           <div className="flex items-center space-x-4">
             <nav className="hidden md:flex space-x-6">
               <a href="#" className="text-gray-600 hover:text-gray-800">Dashboard</a>
-              <a href="#" className="text-gray-600 hover:text-gray-800">Apply Loan</a>
               <a href="#" className="text-gray-600 hover:text-gray-800">Loan Calculator</a>
               <a href="#" className="text-gray-600 hover:text-gray-800">Status</a>
-              <a href="#" className="text-gray-600 hover:text-gray-800">Contact</a>
-              <a href="#" className="text-gray-600 hover:text-gray-800">About</a>
+           
             </nav>
             
             <div className="flex items-center justify-center w-8 h-8 rounded-full bg-purple-100">
