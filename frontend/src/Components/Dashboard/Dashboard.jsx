@@ -54,7 +54,7 @@ function Dashboard() {
                      <Link href="/Dashboard" className="text-2xl  font-bold flex items-center">
                       
                       <img src={logo} alt="Logo" className="mx-auto h-20 mb-2 logo1" />
-                       <span className="text-blue-500">  QUICK FUNDS</span>
+                       <span className="text-gray-600">  QUICK FUNDS</span>
                      </Link>
                    </div>
           </div>

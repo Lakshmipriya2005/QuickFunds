@@ -12,7 +12,7 @@ export default function Home() {
             <Link href="/Home" className="text-2xl  font-bold flex items-center">
              
              <img src={logo} alt="Logo" className="mx-auto h-20 mb-2 logo1" />
-              <span className="text-blue-500">  QUICK FUNDS</span>
+              <span className="text-gray-600">  QUICK FUNDS</span>
             </Link>
           </div>
 
@@ -86,9 +86,9 @@ export default function Home() {
             <img 
               src={logo}
               alt="Logo" 
-              width={400}
-              height={400}
-              className="object-cover rounded-lg shadow-lg"
+              width={500}
+              height={500}
+              className="object-cover rounded-lg shadow-lg lo"
             />
 
               

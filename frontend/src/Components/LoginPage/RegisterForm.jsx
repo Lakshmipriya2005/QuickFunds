@@ -63,7 +63,7 @@ function RegisterForm({ switchToLogin }) {
     <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
       <div className="text-center mb-6">
       <img src={logo} alt="Logo" className="mx-auto h-20 mb-2 logo" />
-        <h1 className="text-2xl font-bold text-blue-600">QUICK FUNDS</h1>
+        <h1 className="text-2xl font-bold text-gray-600">QUICK FUNDS</h1>
       </div>
 
       <h2 className="text-xl text-center text-gray-700 mb-6">Create a new account</h2>
@@ -146,7 +146,7 @@ function RegisterForm({ switchToLogin }) {
 
         <button
           type="submit"
-          className="w-full py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full py-3 bg-black text-white font-medium rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
         >
           Create Account
         </button>
@@ -154,7 +154,7 @@ function RegisterForm({ switchToLogin }) {
 
       <p className="text-center mt-6 text-sm text-gray-600">
         Already have an account?{' '}
-        <button onClick={switchToLogin} className="text-blue-600 font-medium hover:underline">
+        <button onClick={switchToLogin} className="text-gray-600 font-medium hover:underline">
           Sign in
         </button>
       </p>
