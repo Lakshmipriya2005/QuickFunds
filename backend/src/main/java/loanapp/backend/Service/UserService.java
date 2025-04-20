@@ -63,8 +63,4 @@ public class UserService {
         userRepository.updateUserLoggedInStatus(username, "false");
         return ResponseEntity.ok("Logged In Successfully");
     }
-    
-    
-
-
 }

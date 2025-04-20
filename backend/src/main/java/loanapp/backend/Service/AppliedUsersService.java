@@ -54,7 +54,7 @@ public class AppliedUsersService {
     }
      public List<UserStatusDto> getAllUsersStatus() {
         return repository.findAll().stream()
-                .map(loan -> new UserStatusDto(loan.getId(), loan.getEmail(), loan.getStatus(),loan.getName()))
+                .map(loan -> new UserStatusDto(loan.getId(),loan.getName(), loan.getEmail(), loan.getStatus()))
                 .collect(Collectors.toList());
     }
     public boolean updateStatus(Long id, String newStatus) {

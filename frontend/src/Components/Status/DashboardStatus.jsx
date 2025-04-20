@@ -26,6 +26,7 @@ const AdminStatusPage = () => {
         // Replace with your actual API endpoint
         const response = await axios.get('http://localhost:8080/loan/status');
         setStatusData(response.data);
+        console.log('Status data fetched:', response.data);
         setError(null);
       } catch (err) {
         setError('Failed to fetch status data. Please try again later.');
@@ -84,7 +85,12 @@ const AdminStatusPage = () => {
         status: 'Approved',
       });
   
-   
+      setStatusData(prevData =>
+        prevData.map(item =>
+          item.id === id ? { ...item, status: 'Approved' } : item
+        )
+      );
+     
   
       showNotification('Application approved successfully', 'success');
     } catch (err) {
@@ -101,7 +107,11 @@ const AdminStatusPage = () => {
       await axios.post(`http://localhost:8080/loan/updateStatus/${id}`, {
         status: 'Rejected',
       });
-  
+      setStatusData(prevData =>
+        prevData.map(item =>
+          item.id === id ? { ...item, status: 'Rejected' } : item
+        )
+      );
    
   
       showNotification('Application rejected successfully', 'success');
