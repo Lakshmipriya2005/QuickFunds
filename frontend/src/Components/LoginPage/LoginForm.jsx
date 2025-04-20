@@ -14,36 +14,35 @@ function LoginForm({ switchToRegister }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-   if(username=="admin" && password=="admin"){
-    window.alert('Login successful');
-    navigate("/Dashboard") 
-     
-   }
-   else{
-    try {
-      const response = await axios.post(
-        'http://localhost:8080/auth/login',
-        {
-          username: username,
-          password: password
-        },
-        {
-          withCredentials: true // For session cookie
+  
+    if (username === "admin" && password === "admin") {
+      navigate("/Dashboard");
+    } else {
+      try {
+        const response = await axios.post(
+          'http://localhost:8080/auth/login',
+          {
+            username: username,
+            password: password
+          },
+          {
+            withCredentials: true
+          }
+        );
+  
+        if (response.status === 200 ) {
+          navigate("/");
+        } else {
+          setShowError(true);
         }
-      );
-
-      if (response.status === 200) {
-        window.alert('Login successful');
-        console.log("cookies :" ,document.cookie);
-        navigate("/Home") // You can also use useNavigate here
+      } catch (error) {
+        console.error('Login failed:', error);
+        setShowError(true);
       }
-    } catch (error) {
-      
-      console.error('Login failed:', error);
-      setShowError(true);
     }
-  }
   };
+  
+
   const handleForgetPassword=()=>{
     navigate("/ResetPassword")
   }

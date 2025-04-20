@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import loanapp.backend.Dtos.UserDto;
 import loanapp.backend.Dtos.UserSecureDto;
@@ -36,24 +37,34 @@ public class UserService {
         user.setUsername(dto.getUsername());
         user.setEmail(dto.getEmail());
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        user.setIsloggedin("false");
         userRepository.save(user);
+        //.updateUserLoggedInStatus(dto.getUsername(), "false");
+       // usersecDto.setIsLoggedIn("false");
+        
         return "User registered successfully!";
     }
-    public String authenticate(String username, String password) {
-        UserEntity user = userRepository.findByUsername(username)
-                .orElse( null);
+    @Transactional
+    public ResponseEntity<String> authenticate(String username, String password) {
+        System.out.println("Authenticating user: " + username);
+        UserEntity user = userRepository.findByUsername(username).orElse(null);
+        
         if (user == null) {
-            throw new RuntimeException("Username not found");
+            System.out.println("Login failed - username not found: " + username);
+            return ResponseEntity.status(401).body("Username not found");
         }
-        if (passwordEncoder.matches(password, user.getPassword())) {
-            return "Logged In Successfully ";
-        } else {
-            throw new RuntimeException("Invalid password");
+    
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            System.out.println("Login failed - invalid password for user: " + username);
+            ResponseEntity.status(401).body("Invalid password");
         }
-    }
+        user.setIsloggedin("true");
 
-    public List<UserSecureDto> getAll() {
-        return userRepository.allUsers();
+        userRepository.updateUserLoggedInStatus(username, "false");
+        return ResponseEntity.ok("Logged In Successfully");
     }
+    
+    
+
 
 }

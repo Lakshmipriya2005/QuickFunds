@@ -2,6 +2,7 @@ package loanapp.backend.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,37 +26,41 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .cors() // ✅ Enable CORS
+            .cors()
             .and()
             .csrf().disable()
             .authorizeHttpRequests()
-            .requestMatchers( "/loan/**", "/auth/**").permitAll()
+            //.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+            .requestMatchers("/loan/**", "/auth/**").permitAll()
             .anyRequest().authenticated()
+            .and()
+            .formLogin() 
+            //.loginProcessingUrl("/auth/login")
+            .permitAll()
             .and()
             .rememberMe()
             .key("uniqueAndSecret")
             .tokenValiditySeconds(24 * 60 * 60)
             .and()
-            .httpBasic().disable()
             .sessionManagement()
             .maximumSessions(10);
-            // optional, depending on your auth method
-    
         return http.build();
     }
     
 
-    // ✅ CORS configuration to allow frontend (localhost:5173) and support credentials
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:5173"));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true); // ✅ Allow cookies like JSESSIONID
+    
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
-        return source;
-    }
+@Bean
+public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration config = new CorsConfiguration();
+    config.setAllowedOrigins(List.of("http://localhost:5173"));
+    config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+    config.setAllowedHeaders(List.of("*"));
+    config.setAllowCredentials(true); // VERY IMPORTANT for cookies/session!
+
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", config); // ✅ apply to all paths
+    return source;
+}
+
 }

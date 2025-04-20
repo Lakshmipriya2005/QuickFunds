@@ -1,8 +1,27 @@
 import { Link } from "react-router-dom";
-import { Facebook, Twitter, Instagram, Linkedin, User } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { Facebook, Twitter, Instagram, Linkedin, User, LogIn, UserCircle } from "lucide-react";
 import logo from "./assets/logo.jpg"; // Adjust the path to your logo image
 
 export default function Layout({ children }) {
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const userMenuRef = useRef(null);
+
+  // Handle clicks outside of the user menu to close it
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setIsUserMenuOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Navigation Bar - Fixed across all pages */}
@@ -16,7 +35,7 @@ export default function Layout({ children }) {
           </div>
 
           <nav className="hidden md:flex items-center space-x-6">
-            <Link to="/Home" className="hover:text-gray-300 transition-colors">
+            <Link to="/" className="hover:text-gray-300 transition-colors">
               Home
             </Link>
             <Link to="/ApplyLoan" className="hover:text-gray-300 transition-colors">
@@ -34,12 +53,45 @@ export default function Layout({ children }) {
             <Link to="/Contact" className="hover:text-gray-300 transition-colors">
               Contact
             </Link>
-            <Link to="/profile" className="hover:text-gray-300 transition-colors">
-              <User className="h-5 w-5" />
-            </Link>
+            
+            {/* User Profile Dropdown */}
+            <div className="relative" ref={userMenuRef}>
+              <button 
+                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                className="hover:text-gray-300 transition-colors flex items-center"
+              >
+                <User className="h-5 w-5" />
+              </button>
+              
+              {/* Dropdown Menu */}
+              {isUserMenuOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-200">
+                  <Link 
+                    to="/profile" 
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                    onClick={() => setIsUserMenuOpen(false)}
+                  >
+                    <UserCircle className="h-4 w-4 mr-2" />
+                    Profile
+                  </Link>
+                  <Link 
+                    to="/login" 
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                    onClick={() => setIsUserMenuOpen(false)}
+                  >
+                    <LogIn className="h-4 w-4 mr-2" />
+                    Login
+                  </Link>
+                </div>
+              )}
+            </div>
           </nav>
 
-          <button className="md:hidden">
+          {/* Mobile Menu Button */}
+          <button 
+            className="md:hidden"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -56,6 +108,70 @@ export default function Layout({ children }) {
             </svg>
           </button>
         </div>
+        
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden mt-4 px-2 pt-2 pb-4 space-y-1 bg-white border-t border-gray-200">
+            <Link 
+              to="/" 
+              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Home
+            </Link>
+            <Link 
+              to="/ApplyLoan" 
+              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Apply Loan
+            </Link>
+            <Link 
+              to="/LoanCalculator" 
+              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Loan Calculator
+            </Link>
+            <Link 
+              to="/Status" 
+              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Status
+            </Link>
+            <Link 
+              to="/About" 
+              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              About Us
+            </Link>
+            <Link 
+              to="/Contact" 
+              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Contact
+            </Link>
+            <Link 
+              to="/profile" 
+              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 flex items-center"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <UserCircle className="h-5 w-5 mr-2" />
+              Profile
+            </Link>
+            <Link 
+              to="/login" 
+              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-gray-100 flex items-center"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <LogIn className="h-5 w-5 mr-2" />
+              Login
+            </Link>
+          </div>
+        )}
       </header>
 
       {/* Page Content */}

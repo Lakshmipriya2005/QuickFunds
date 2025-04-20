@@ -25,6 +25,7 @@ public class UserEntity {
 
     @Column(unique = true)
     private String email;
+    private String isloggedin;
 
     private String password;
 }
