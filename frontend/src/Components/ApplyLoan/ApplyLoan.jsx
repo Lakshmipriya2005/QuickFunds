@@ -1,5 +1,3 @@
-
-
 import { useState } from "react"
 import Layout from "../../Layout"
 
@@ -66,25 +64,23 @@ export default function LoanApplicationForm() {
     }
   }
   
-
   return (
   <>
   <Layout>
-   
-    <div className="flex justify-center items-center min-h-screen bg-white p-4">
-      <div className="w-full max-w-2xl border border-black rounded-lg overflow-hidden">
-        <div className="bg-black text-white p-6">
-          <h2 className="text-2xl font-bold">Loan Application</h2>
-          <p className="text-gray-300">Please fill out all fields to apply for your loan</p>
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-b from-gray-50 to-white p-6">
+      <div className="w-full max-w-2xl rounded-xl shadow-xl overflow-hidden bg-white">
+        <div className="bg-gradient-to-r from-blue-800 to-indigo-900 text-white p-8">
+          <h2 className="text-3xl font-bold tracking-tight">Loan Application</h2>
+          <p className="text-blue-100 mt-2">Complete the form below to apply for your loan</p>
         </div>
         <form onSubmit={handleSubmit}>
-          <div className="p-6 space-y-6">
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold border-b border-gray-200 pb-2">Personal Information</h3>
+          <div className="p-8 space-y-8">
+            <div className="space-y-6">
+              <h3 className="text-xl font-semibold text-gray-800 border-b border-gray-200 pb-3">Personal Information</h3>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label htmlFor="name" className="block text-sm font-medium text-black">
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                     Full Name
                   </label>
                   <input
@@ -92,13 +88,13 @@ export default function LoanApplicationForm() {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black focus:border-black"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
                     required
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="email" className="block text-sm font-medium text-black">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                     Email Address
                   </label>
                   <input
@@ -107,14 +103,14 @@ export default function LoanApplicationForm() {
                     type="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black focus:border-black"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
                     required
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="phoneNumber" className="block text-sm font-medium text-black">
+                <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">
                   Phone Number
                 </label>
                 <input
@@ -123,13 +119,13 @@ export default function LoanApplicationForm() {
                   type="tel"
                   value={formData.phoneNumber}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black focus:border-black"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="address" className="block text-sm font-medium text-black">
+                <label htmlFor="address" className="block text-sm font-medium text-gray-700">
                   Address
                 </label>
                 <input
@@ -137,14 +133,14 @@ export default function LoanApplicationForm() {
                   name="address"
                   value={formData.address}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black focus:border-black"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
                   required
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label htmlFor="city" className="block text-sm font-medium text-black">
+                  <label htmlFor="city" className="block text-sm font-medium text-gray-700">
                     City
                   </label>
                   <input
@@ -152,13 +148,13 @@ export default function LoanApplicationForm() {
                     name="city"
                     value={formData.city}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black focus:border-black"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
                     required
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="state" className="block text-sm font-medium text-black">
+                  <label htmlFor="state" className="block text-sm font-medium text-gray-700">
                     State
                   </label>
                   <input
@@ -166,18 +162,18 @@ export default function LoanApplicationForm() {
                     name="state"
                     value={formData.state}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black focus:border-black"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
                     required
                   />
                 </div>
               </div>
             </div>
 
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold border-b border-gray-200 pb-2">Loan Details</h3>
+            <div className="space-y-6">
+              <h3 className="text-xl font-semibold text-gray-800 border-b border-gray-200 pb-3">Loan Details</h3>
 
               <div className="space-y-2">
-                <label htmlFor="loanType" className="block text-sm font-medium text-black">
+                <label htmlFor="loanType" className="block text-sm font-medium text-gray-700">
                   Loan Type
                 </label>
                 <select
@@ -185,7 +181,7 @@ export default function LoanApplicationForm() {
                   name="loanType"
                   value={formData.loanType}
                   onChange={handleSelectChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black focus:border-black"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150 bg-white"
                   required
                 >
                   <option value="" disabled>Select loan type</option>
@@ -198,7 +194,7 @@ export default function LoanApplicationForm() {
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="amount" className="block text-sm font-medium text-black">
+                <label htmlFor="amount" className="block text-sm font-medium text-gray-700">
                   Loan Amount ($)
                 </label>
                 <input
@@ -208,13 +204,13 @@ export default function LoanApplicationForm() {
                   min="0"
                   value={formData.amount || ""}
                   onChange={handleAmountChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black focus:border-black"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="property" className="block text-sm font-medium text-black">
+                <label htmlFor="property" className="block text-sm font-medium text-gray-700">
                   Property Details
                 </label>
                 <input
@@ -222,24 +218,24 @@ export default function LoanApplicationForm() {
                   name="property"
                   value={formData.property}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-black focus:border-black"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
                   required
                 />
               </div>
             </div>
           </div>
 
-          <div className="flex justify-between p-6 border-t border-gray-200">
+          <div className="flex justify-between p-8 border-t border-gray-200 bg-gray-50">
             <button
               type="button"
               onClick={handleReset}
-              className="px-4 py-2 border border-black text-black rounded-md hover:bg-gray-100 focus:outline-none"
+              className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 font-medium"
             >
-              Reset
+              Reset Form
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 focus:outline-none"
+              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-lg hover:from-blue-700 hover:to-indigo-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 font-medium shadow-md"
             >
               Submit Application
             </button>
@@ -249,6 +245,5 @@ export default function LoanApplicationForm() {
     </div>
     </Layout>
     </>
-    
   )
 }
