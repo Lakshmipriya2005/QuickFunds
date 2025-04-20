@@ -63,7 +63,7 @@ function Dashboard() {
             <nav className="hidden md:flex space-x-6">
               <Link to="/Dashboard" className="text-gray-600 hover:text-gray-800">Dashboard</Link>
               <Link to="/LoanCalculator" className="text-gray-600 hover:text-gray-800">Loan Calculator</Link>
-              <Link to="/Status" className="text-gray-600 hover:text-gray-800">Status</Link>
+              <Link to="/DashboardStatus" className="text-gray-600 hover:text-gray-800">Status</Link>
            
             </nav>
             

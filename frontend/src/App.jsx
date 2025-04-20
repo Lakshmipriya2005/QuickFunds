@@ -7,6 +7,7 @@ import ResetPassword from './Components/LoginPage/ResetPassword'
 import './App.css'
 import Home from './Components/Home/Home'
 import Status from './Components/Status/Status'
+import DashboardStatus from './Components/Status/DashboardStatus'
 import LoanCalculator from './Components/Calculator/LoanCalculator'
 import  Contact  from './Components/Contact/Contact'
 import ApplyLoan from './Components/ApplyLoan/ApplyLoan'
@@ -31,6 +32,7 @@ function App() {
       <Route  path="/Contact"   element={<Contact/>} />
       <Route  path="/ApplyLoan"   element={<ApplyLoan/>} />
       <Route  path="/About"   element={<About/>} />
+      <Route path="/DashboardStatus" element={<DashboardStatus />} />
     </Routes>
     
     </BrowserRouter>
