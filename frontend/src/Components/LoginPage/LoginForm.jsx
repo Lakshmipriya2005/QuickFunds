@@ -129,5 +129,4 @@ function LoginForm({ switchToRegister }) {
     </div>
   );
 }
-
 export default LoginForm;
