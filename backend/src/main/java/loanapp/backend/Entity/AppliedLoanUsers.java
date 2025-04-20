@@ -21,6 +21,7 @@ public class AppliedLoanUsers {
     private String loanType;
     private int amount;
     private String property;
+    private String status = "Pending"; 
 
     
 }

@@ -2,7 +2,7 @@ package loanapp.backend.Dtos;
 
 
 
-import jakarta.persistence.Entity;
+
 import lombok.Data;
 
 @Data
@@ -17,6 +17,7 @@ public class UserAppliedDto {
     private String loanType;
     private int amount;
     private String property;
+    
 
     
 }
