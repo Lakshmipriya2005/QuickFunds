@@ -12,16 +12,17 @@ import  Contact  from './Components/Contact/Contact'
 import ApplyLoan from './Components/ApplyLoan/ApplyLoan'
 import About from './Components/About/About'
 
-
+//import Layout from "./Layout";
 function App() {
 
 
   return (
     <>
     <BrowserRouter>
+    
     <Routes>
-      <Route path="/" element={<Auth />} />
-      <Route  path="/Home"   element={<Home/>} />
+      <Route path="/Login" element={<Auth />} />
+      <Route  path="/"   element={<Home/>} />
       <Route  path="/Dashboard"   element={<Dashboard/>} />
       <Route  path="/ResetPassword"   element={<ResetPassword/>} />
       <Route path="/" element={<Auth />} />
@@ -31,6 +32,7 @@ function App() {
       <Route  path="/ApplyLoan"   element={<ApplyLoan/>} />
       <Route  path="/About"   element={<About/>} />
     </Routes>
+    
     </BrowserRouter>
      
     </>

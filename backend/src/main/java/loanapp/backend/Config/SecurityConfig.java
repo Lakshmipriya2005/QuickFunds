@@ -1,8 +1,8 @@
 package loanapp.backend.Config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,45 +23,44 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-  @Autowired
-private CustomAuthEntryPoint customAuthEntryPoint;
-
-@Bean
-public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    http
-        .cors()
-        .and()
-        .csrf().disable()
-        .authorizeHttpRequests()
-        .requestMatchers("/auth/**").permitAll() // public routes
-        .anyRequest().authenticated() // all other routes protected
-        .and()
-        .exceptionHandling()
-        .authenticationEntryPoint(customAuthEntryPoint) // 👈 use custom handler
-        .and()
-        .rememberMe()
-        .key("uniqueAndSecret")
-        .tokenValiditySeconds(24 * 60 * 60)
-        .and()
-        .sessionManagement()
-        .maximumSessions(10);
-
-    return http.build();
-}
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+            .cors()
+            .and()
+            .csrf().disable()
+            .authorizeHttpRequests()
+            //.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+            .requestMatchers("/loan/**", "/auth/**").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .formLogin() 
+            //.loginProcessingUrl("/auth/login")
+            .permitAll()
+            .and()
+            .rememberMe()
+            .key("uniqueAndSecret")
+            .tokenValiditySeconds(24 * 60 * 60)
+            .and()
+            .sessionManagement()
+            .maximumSessions(10);
+        return http.build();
+    }
+    
 
     
 
-    // ✅ CORS configuration to allow frontend (localhost:5173) and support credentials
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:5173"));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true); // ✅ Allow cookies like JSESSIONID
+@Bean
+public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration config = new CorsConfiguration();
+    config.setAllowedOrigins(List.of("http://localhost:5173"));
+    config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+    config.setAllowedHeaders(List.of("*"));
+    config.setAllowCredentials(true); // VERY IMPORTANT for cookies/session!
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
-        return source;
-    }
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", config); // ✅ apply to all paths
+    return source;
+}
+
 }

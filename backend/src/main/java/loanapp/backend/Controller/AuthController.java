@@ -29,20 +29,22 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody UserDto userDto) {
-        return ResponseEntity.ok(userService.register(userDto));
+        String rsponse=userService.register(userDto);
+        System.out.println(rsponse);
+        return ResponseEntity.ok(rsponse);
     }
-
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UserDto userDto, HttpServletRequest request) {
-       String response = userService.authenticate(userDto.getUsername(), userDto.getPassword());
-       request.getSession(true);
-        return ResponseEntity.ok(response);
-    }
-
-    @GetMapping("/")
-    public List<UserSecureDto> getAll(){
-
-        return userService.getAll();
-    }
+        
+            ResponseEntity<String> response = userService.authenticate(userDto.getUsername(), userDto.getPassword());
+            System.out.println(response.getStatusCode());
     
+            if(response.getStatusCode().value()==200){
+                System.out.print("Success");
+                return ResponseEntity.ok("Logged In Successfully");
+            } else {
+                return ResponseEntity.status(401).body("Wrong Credentials");
+            }
+    }
+  
 }
