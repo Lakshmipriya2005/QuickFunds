@@ -1,6 +1,7 @@
 package loanapp.backend.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,18 @@ public class AppliedUsersService {
     }
      public List<UserStatusDto> getAllUsersStatus() {
         return repository.findAll().stream()
-                .map(loan -> new UserStatusDto(loan.getName(), loan.getEmail(), loan.getStatus()))
+                .map(loan -> new UserStatusDto(loan.getId(), loan.getEmail(), loan.getStatus(),loan.getName()))
                 .collect(Collectors.toList());
+    }
+    public boolean updateStatus(Long id, String newStatus) {
+        Optional<AppliedLoanUsers> optional = repository.findById(id);
+        if (optional.isPresent()) {
+            AppliedLoanUsers application = optional.get();
+            application.setStatus(newStatus);
+            repository.save(application);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

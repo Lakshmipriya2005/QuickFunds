@@ -1,8 +1,11 @@
 package loanapp.backend.Controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import loanapp.backend.Dtos.UserAppliedDto;
 import loanapp.backend.Dtos.UserStatusDto;
@@ -27,5 +30,15 @@ public class AppliedLoanController {
 public List<UserStatusDto> getAllUserStatuses() {
     return service.getAllUsersStatus();
 }
+  @PostMapping("/updateStatus/{id}")
+    public ResponseEntity<String> updateApplicationStatus(@PathVariable Long id, @RequestBody Map<String, String> request) {
+        String status = request.get("status");
+        boolean updated = service.updateStatus(id, status);
+        if (updated) {
+            return ResponseEntity.ok("Application status updated to: " + status);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Application not found");
+        }
+    }
 
 }
