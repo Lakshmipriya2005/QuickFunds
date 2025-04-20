@@ -3,16 +3,7 @@ import axios from 'axios';
 import { Search, Check, X, AlertCircle, Filter } from 'lucide-react';
 
 const AdminStatusPage = () => {
-    const [statusData, setStatusData] = useState([
-        { id: 1, username: 'johndoe', email: 'john.doe@example.com', status: 'Approved' },
-        { id: 2, username: 'janedoe', email: 'jane.doe@example.com', status: 'Pending' },
-        { id: 3, username: 'mikebrown', email: 'mike.brown@example.com', status: 'Rejected' },
-        { id: 4, username: 'sarahlee', email: 'sarah.lee@example.com', status: 'Pending' },
-        { id: 5, username: 'davidwilson', email: 'david.wilson@example.com', status: 'Approved' },
-        { id: 6, username: 'emmajohnson', email: 'emma.johnson@example.com', status: 'Pending' },
-        { id: 7, username: 'alexgarcia', email: 'alex.garcia@example.com', status: 'Approved' },
-        { id: 8, username: 'oliviasmith', email: 'olivia.smith@example.com', status: 'Pending' },
-      ]);
+    const [statusData, setStatusData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -27,45 +18,34 @@ const AdminStatusPage = () => {
     { value: 'rejected', label: 'Rejected' },
   ];
 
-//   useEffect(() => {
-//     // Fetch status data from your backend
-//     const fetchStatusData = async () => {
-//       setIsLoading(true);
-//       try {
-//         // Replace with your actual API endpoint
-//         const response = await axios.get('your-api-endpoint/admin/status');
-//         setStatusData(response.data);
-//         setError(null);
-//       } catch (err) {
-//         setError('Failed to fetch status data. Please try again later.');
-//         console.error('Error fetching status data:', err);
+  useEffect(() => {
+    // Fetch status data from your backend
+    const fetchStatusData = async () => {
+      setIsLoading(true);
+      try {
+        // Replace with your actual API endpoint
+        const response = await axios.get('http://localhost:8080/loan/status');
+        setStatusData(response.data);
+        setError(null);
+      } catch (err) {
+        setError('Failed to fetch status data. Please try again later.');
+        console.error('Error fetching status data:', err);
         
-//         // Temporary mock data for development
-//         setStatusData([
-//           { id: 1, username: 'johndoe', email: 'john.doe@example.com', status: 'Pending' },
-//           { id: 2, username: 'janedoe', email: 'jane.doe@example.com', status: 'Pending' },
-//           { id: 3, username: 'mikebrown', email: 'mike.brown@example.com', status: 'Pending' },
-//           { id: 4, username: 'sarahlee', email: 'sarah.lee@example.com', status: 'Pending' },
-//           { id: 5, username: 'davidwilson', email: 'david.wilson@example.com', status: 'Approved' },
-//           { id: 6, username: 'emmajohnson', email: 'emma.johnson@example.com', status: 'Rejected' },
-//           { id: 7, username: 'alexgarcia', email: 'alex.garcia@example.com', status: 'Pending' },
-//           { id: 8, username: 'oliviasmith', email: 'olivia.smith@example.com', status: 'Pending' },
-//           { id: 9, username: 'williamjones', email: 'william.jones@example.com', status: 'Approved' },
-//           { id: 10, username: 'sophiamiller', email: 'sophia.miller@example.com', status: 'Rejected' },
-//         ]);
-//       } finally {
-//         setIsLoading(false);
-//       }
-//     };
+        // Temporary mock data for development
+      
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-//     fetchStatusData();
-//   }, []);
+    fetchStatusData();
+  }, []);
 
   // Filter the data based on search term and status filter
   const filteredData = statusData.filter(item => {
     // First apply text search filter
     const matchesSearch = 
-      item.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.status.toLowerCase().includes(searchTerm.toLowerCase());
     
@@ -100,16 +80,12 @@ const AdminStatusPage = () => {
   const handleApprove = async (id) => {
     setActionInProgress(id);
     try {
-      // Replace with your actual API endpoint
-      // await axios.post(`your-api-endpoint/admin/approve/${id}`);
-      
-      // Update local state (for demo without actual API)
-      setStatusData(prevData => 
-        prevData.map(item => 
-          item.id === id ? { ...item, status: 'Approved' } : item
-        )
-      );
-      
+      await axios.post(`http://localhost:8080/loan/updateStatus/${id}`, {
+        status: 'Approved',
+      });
+  
+   
+  
       showNotification('Application approved successfully', 'success');
     } catch (err) {
       console.error('Error approving application:', err);
@@ -118,21 +94,16 @@ const AdminStatusPage = () => {
       setActionInProgress(null);
     }
   };
-
-  // Handle application rejection
+  
   const handleReject = async (id) => {
     setActionInProgress(id);
     try {
-      // Replace with your actual API endpoint
-      // await axios.post(`your-api-endpoint/admin/reject/${id}`);
-      
-      // Update local state (for demo without actual API)
-      setStatusData(prevData => 
-        prevData.map(item => 
-          item.id === id ? { ...item, status: 'Rejected' } : item
-        )
-      );
-      
+      await axios.post(`http://localhost:8080/loan/updateStatus/${id}`, {
+        status: 'Rejected',
+      });
+  
+   
+  
       showNotification('Application rejected successfully', 'success');
     } catch (err) {
       console.error('Error rejecting application:', err);
@@ -141,6 +112,9 @@ const AdminStatusPage = () => {
       setActionInProgress(null);
     }
   };
+  
+      
+      
 
   // Show notification
   const showNotification = (message, type) => {
@@ -316,7 +290,7 @@ const AdminStatusPage = () => {
                   filteredData.map((item) => (
                     <tr key={item.id} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900">{item.username}</div>
+                        <div className="text-sm font-medium text-gray-900">{item.name}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-500">{item.email}</div>
