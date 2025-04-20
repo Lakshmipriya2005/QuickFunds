@@ -9,7 +9,6 @@ import Home from './Components/Home/Home'
 import Status from './Components/Status/Status'
 import DashboardStatus from './Components/Status/DashboardStatus'
 import LoanCalculator from './Components/Calculator/LoanCalculator'
-import  Contact  from './Components/Contact/Contact'
 import ApplyLoan from './Components/ApplyLoan/ApplyLoan'
 import About from './Components/About/About'
 
@@ -29,7 +28,6 @@ function App() {
       <Route path="/" element={<Auth />} />
       <Route  path="/Status"   element={<Status/>} />
       <Route  path="/LoanCalculator"   element={<LoanCalculator/>} />
-      <Route  path="/Contact"   element={<Contact/>} />
       <Route  path="/ApplyLoan"   element={<ApplyLoan/>} />
       <Route  path="/About"   element={<About/>} />
       <Route path="/DashboardStatus" element={<DashboardStatus />} />
