@@ -29,12 +29,6 @@ export default function LoanApplicationForm() {
     setFormData((prev) => ({ ...prev, amount: value }))
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log("Form submitted:", formData)
-    alert("Your loan application has been received.")
-  }
-
   const handleReset = () => {
     setFormData({
       name: "",
@@ -48,6 +42,29 @@ export default function LoanApplicationForm() {
       property: "",
     })
   }
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const response = await fetch("http://localhost:8080/loan/apply", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+  
+      if (!response.ok) throw new Error("Failed to submit application")
+  
+      const result = await response.text()
+      console.log("Success:", result)
+      alert("Your loan application has been received.")
+      handleReset()
+    } catch (error) {
+      console.error("Error:", error)
+      alert("Something went wrong!")
+    }
+  }
+  
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-white p-4">

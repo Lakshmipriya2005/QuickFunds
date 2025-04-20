@@ -6,15 +6,29 @@ import loanapp.backend.Dtos.UserAppliedDto;
 import loanapp.backend.Entity.AppliedLoanUsers;
 import loanapp.backend.Repo.AppliedUsersRepo;
 
-
 @Service
 public class AppliedUsersService {
 
     @Autowired
     private AppliedUsersRepo repository;
 
-    public  loanapp.backend.Entity.AppliedLoanUsers apply(UserAppliedDto dto) {
-       AppliedLoanUsers loan = new  AppliedLoanUsers();
+    public AppliedLoanUsers apply(UserAppliedDto dto) {
+        // Validate required fields
+        if (isNullOrEmpty(dto.getName()) ||
+            isNullOrEmpty(dto.getEmail()) ||
+            isNullOrEmpty(dto.getPhoneNumber()) ||
+            isNullOrEmpty(dto.getAddress()) ||
+            isNullOrEmpty(dto.getCity()) ||
+            isNullOrEmpty(dto.getState()) ||
+            isNullOrEmpty(dto.getLoanType()) ||
+            dto.getAmount() <= 0 ||
+            isNullOrEmpty(dto.getProperty())) {
+            
+            throw new IllegalArgumentException("All fields must be filled correctly.");
+        }
+
+        // Mapping DTO to Entity
+        AppliedLoanUsers loan = new AppliedLoanUsers();
         loan.setName(dto.getName());
         loan.setEmail(dto.getEmail());
         loan.setPhoneNumber(dto.getPhoneNumber());
@@ -26,5 +40,10 @@ public class AppliedUsersService {
         loan.setProperty(dto.getProperty());
 
         return repository.save(loan);
+    }
+
+    // Helper method to check for null or blank strings
+    private boolean isNullOrEmpty(String str) {
+        return str == null || str.trim().isEmpty();
     }
 }

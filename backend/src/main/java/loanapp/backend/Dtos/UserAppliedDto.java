@@ -2,7 +2,7 @@ package loanapp.backend.Dtos;
 
 
 
-import jakarta.persistence.Entity;
+
 import lombok.Data;
 
 @Data

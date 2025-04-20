@@ -1,5 +1,6 @@
 package loanapp.backend.Config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,27 +23,32 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-            .cors() // ✅ Enable CORS
-            .and()
-            .csrf().disable()
-            .authorizeHttpRequests()
-            .requestMatchers( "/loan/**", "/auth/**").permitAll()
-            .anyRequest().authenticated()
-            .and()
-            .rememberMe()
-            .key("uniqueAndSecret")
-            .tokenValiditySeconds(24 * 60 * 60)
-            .and()
-            .httpBasic().disable()
-            .sessionManagement()
-            .maximumSessions(10);
-            // optional, depending on your auth method
-    
-        return http.build();
-    }
+  @Autowired
+private CustomAuthEntryPoint customAuthEntryPoint;
+
+@Bean
+public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http
+        .cors()
+        .and()
+        .csrf().disable()
+        .authorizeHttpRequests()
+        .requestMatchers("/auth/**").permitAll() // public routes
+        .anyRequest().authenticated() // all other routes protected
+        .and()
+        .exceptionHandling()
+        .authenticationEntryPoint(customAuthEntryPoint) // 👈 use custom handler
+        .and()
+        .rememberMe()
+        .key("uniqueAndSecret")
+        .tokenValiditySeconds(24 * 60 * 60)
+        .and()
+        .sessionManagement()
+        .maximumSessions(10);
+
+    return http.build();
+}
+
     
 
     // ✅ CORS configuration to allow frontend (localhost:5173) and support credentials

@@ -8,6 +8,7 @@ import loanapp.backend.Service.AppliedUsersService;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 @RequestMapping("/loan")
 
 public class AppliedLoanController {
