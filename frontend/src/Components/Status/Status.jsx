@@ -4,56 +4,38 @@ import { Search } from 'lucide-react';
 import Layout from '../../Layout';
 
 const StatusPage = () => {
-  const [statusData, setStatusData] = useState([
-    { id: 1, username: 'johndoe', email: 'john.doe@example.com', status: 'Approved' },
-    { id: 2, username: 'janedoe', email: 'jane.doe@example.com', status: 'Pending' },
-    { id: 3, username: 'mikebrown', email: 'mike.brown@example.com', status: 'Rejected' },
-    { id: 4, username: 'sarahlee', email: 'sarah.lee@example.com', status: 'Under Review' },
-    { id: 5, username: 'davidwilson', email: 'david.wilson@example.com', status: 'Approved' },
-    { id: 6, username: 'emmajohnson', email: 'emma.johnson@example.com', status: 'Pending' },
-    { id: 7, username: 'alexgarcia', email: 'alex.garcia@example.com', status: 'Approved' },
-    { id: 8, username: 'oliviasmith', email: 'olivia.smith@example.com', status: 'Under Review' },
-  ]);
+  const [statusData, setStatusData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
-  /*useEffect(() => {
+  useEffect(() => {
     // Fetch status data from your backend
     const fetchStatusData = async () => {
       setIsLoading(true);
       try {
         // Replace with your actual API endpoint
-        const response = await axios.get('your-api-endpoint/status');
+        const response = await axios.get('http://localhost:8080/loan/status');
         setStatusData(response.data);
+        console.log('Status data fetched:', response.data);
         setError(null);
       } catch (err) {
         setError('Failed to fetch status data. Please try again later.');
         console.error('Error fetching status data:', err);
         
-        // Temporary mock data for development
-        setStatusData([
-          { id: 1, username: 'johndoe', email: 'john.doe@example.com', status: 'Approved' },
-          { id: 2, username: 'janedoe', email: 'jane.doe@example.com', status: 'Pending' },
-          { id: 3, username: 'mikebrown', email: 'mike.brown@example.com', status: 'Rejected' },
-          { id: 4, username: 'sarahlee', email: 'sarah.lee@example.com', status: 'Under Review' },
-          { id: 5, username: 'davidwilson', email: 'david.wilson@example.com', status: 'Approved' },
-          { id: 6, username: 'emmajohnson', email: 'emma.johnson@example.com', status: 'Pending' },
-          { id: 7, username: 'alexgarcia', email: 'alex.garcia@example.com', status: 'Approved' },
-          { id: 8, username: 'oliviasmith', email: 'olivia.smith@example.com', status: 'Under Review' },
-        ]);
+      
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchStatusData();
-  }, []);*/
+  }, []);
 
   // Filter the data based on search term
   
   const filteredData = statusData.filter(item => 
-    item.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     item.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
     item.status.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -133,7 +115,7 @@ const StatusPage = () => {
                   filteredData.map((item) => (
                     <tr key={item.id} className="hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900">{item.username}</div>
+                        <div className="text-sm font-medium text-gray-900">{item.name}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="text-sm text-gray-500">{item.email}</div>

@@ -1,8 +1,12 @@
 package loanapp.backend.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import loanapp.backend.Dtos.UserAppliedDto;
+import loanapp.backend.Dtos.UserStatusDto;
 import loanapp.backend.Entity.AppliedLoanUsers;
 import loanapp.backend.Repo.AppliedUsersRepo;
 
@@ -38,6 +42,7 @@ public class AppliedUsersService {
         loan.setLoanType(dto.getLoanType());
         loan.setAmount(dto.getAmount());
         loan.setProperty(dto.getProperty());
+        loan.setStatus("Pending"); // Default status
 
         return repository.save(loan);
     }
@@ -45,5 +50,10 @@ public class AppliedUsersService {
     // Helper method to check for null or blank strings
     private boolean isNullOrEmpty(String str) {
         return str == null || str.trim().isEmpty();
+    }
+     public List<UserStatusDto> getAllUsersStatus() {
+        return repository.findAll().stream()
+                .map(loan -> new UserStatusDto(loan.getName(), loan.getEmail(), loan.getStatus()))
+                .collect(Collectors.toList());
     }
 }
