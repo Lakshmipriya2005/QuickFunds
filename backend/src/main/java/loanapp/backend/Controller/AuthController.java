@@ -1,6 +1,8 @@
 package loanapp.backend.Controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.web.bind.annotation.RestController;
 
 import loanapp.backend.Dtos.UserDto;
@@ -34,17 +38,22 @@ public class AuthController {
         return ResponseEntity.ok(rsponse);
     }
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserDto userDto, HttpServletRequest request) {
+public ResponseEntity<?> login(@RequestBody UserDto userDto, HttpServletRequest request) {
+    String jwt = userService.authenticate(userDto);
+
+    if (!jwt.equals("fail")) {
+        HttpSession session = request.getSession(true); 
+        session.setAttribute("username", userDto.getUsername());
+
+        Map<String, String> tokenResponse = new HashMap<>();
+        tokenResponse.put("token", jwt);
+        tokenResponse.put("username", userDto.getUsername());
         
-            ResponseEntity<String> response = userService.authenticate(userDto.getUsername(), userDto.getPassword());
-            System.out.println(response.getStatusCode());
-    
-            if(response.getStatusCode().value()==200){
-                System.out.print("Success");
-                return ResponseEntity.ok("Logged In Successfully");
-            } else {
-                return ResponseEntity.status(401).body("Wrong Credentials");
-            }
+        return ResponseEntity.ok(tokenResponse);
+    } else {
+        return ResponseEntity.status(401).body("Invalid username or password");
     }
+}
+
   
 }

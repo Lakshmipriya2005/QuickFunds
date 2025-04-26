@@ -30,11 +30,17 @@ function LoginForm({ switchToRegister }) {
           }
         );
   
-        if (response.status === 200 ) {
-          navigate("/");
-        } else {
-          setShowError(true);
-        }
+        const token = response.data.token;
+
+      if (token) {
+        localStorage.setItem('token', token);
+        console.log("Token:", token); // Log the token for debugging
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        navigate("/");
+      } else {
+        setShowError(true);
+      }
+ 
       } catch (error) {
         console.error('Login failed:', error);
         setShowError(true);

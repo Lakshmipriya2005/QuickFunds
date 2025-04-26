@@ -14,7 +14,11 @@ import About from './Components/About/About'
 
 //import Layout from "./Layout";
 function App() {
-
+  // const token = localStorage.getItem('token');
+  // if (!token) {
+  //   navigate("/login");
+  // }
+  
 
   return (
     <>
