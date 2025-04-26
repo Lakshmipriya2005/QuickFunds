@@ -2,12 +2,20 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Search, FileText, AlertCircle } from 'lucide-react';
 import Layout from '../../Layout';
+//import { useNavigate } from 'react-router-dom';
 
 const StatusPage = () => {
   const [statusData, setStatusData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const[isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
+  //const navigate = useNavigate();
+  useEffect(() => {
+    // Check if token exists to know if user is logged in
+    const token = localStorage.getItem('token');
+    setIsLoggedIn(!!token); // true if token exists
+  }, []);
 
   useEffect(() => {
     // Fetch status data from your backend
@@ -100,7 +108,7 @@ const StatusPage = () => {
             </div>
             <p className="text-red-600 font-medium">{error}</p>
           </div>
-        ) : (
+        ) :isLoggedIn? (
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
@@ -146,6 +154,13 @@ const StatusPage = () => {
                 )}
               </tbody>
             </table>
+          </div>
+        ):(
+          <div className="p-16 text-center">
+            <div className="mx-auto w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-4">
+              <AlertCircle className="h-8 w-8 text-yellow-500" />
+            </div>
+            <p className="text-yellow-600 font-medium">Please log in to view your loan status.</p>
           </div>
         )}
       </div>
