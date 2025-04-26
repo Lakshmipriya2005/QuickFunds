@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 import logo from '../../assets/logo.jpg'; // Adjust the path as necessary
 import { useNavigate } from 'react-router-dom';
@@ -33,7 +34,8 @@ function LoginForm({ switchToRegister }) {
         const token = response.data.token;
 
       if (token) {
-        localStorage.setItem('token', token);
+       // localStorage.setItem('token', token);
+       Cookies.set('token', token, { expires: 7 });
         console.log("Token:", token); // Log the token for debugging
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         navigate("/");

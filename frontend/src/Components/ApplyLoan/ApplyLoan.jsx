@@ -1,6 +1,8 @@
 import { useState } from "react"
 import Layout from "../../Layout"
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
+
 export default function LoanApplicationForm() {
   const [formData, setFormData] = useState({
     name: "",
@@ -45,7 +47,8 @@ export default function LoanApplicationForm() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const token = localStorage.getItem('token');
+     // const token = localStorage.getItem('token');
+     const token = Cookies.get('token');
       const response = await fetch("http://localhost:8080/loan/apply", {
         method: "POST",
         headers: {
