@@ -145,6 +145,85 @@ export default function Layout({ children }) {
 
       {/* Footer */}
       {/* Footer content here */}
+      <footer className="bg-gradient-to-r from-blue-800 to-blue-900 text-white py-12">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+              <h3 className="text-xl font-bold mb-4 text-blue-100">Quick Funds</h3>
+              <p className="text-blue-200 mb-4">
+                Providing financial solutions since 2010. We're committed to helping you achieve your financial goals.
+              </p>
+              <div className="flex space-x-4">
+                <Link to="#" className="text-blue-200 hover:text-white transition-colors duration-300">
+                  <Facebook className="h-5 w-5" />
+                </Link>
+                <Link to="#" className="text-blue-200 hover:text-white transition-colors duration-300">
+                  <Twitter className="h-5 w-5" />
+                </Link>
+                <Link to="#" className="text-blue-200 hover:text-white transition-colors duration-300">
+                  <Instagram className="h-5 w-5" />
+                </Link>
+                <Link to="#" className="text-blue-200 hover:text-white transition-colors duration-300">
+                  <Linkedin className="h-5 w-5" />
+                </Link>
+              </div>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-bold mb-4 text-blue-100">Our Branches</h3>
+              <ul className="space-y-2 text-blue-200">
+                <li className="flex items-center"><span className="w-2 h-2 rounded-full bg-blue-400 mr-2"></span>New York: 123 Finance St</li>
+                <li className="flex items-center"><span className="w-2 h-2 rounded-full bg-blue-400 mr-2"></span>Los Angeles: 456 Loan Ave</li>
+                <li className="flex items-center"><span className="w-2 h-2 rounded-full bg-blue-400 mr-2"></span>Chicago: 789 Credit Blvd</li>
+                <li className="flex items-center"><span className="w-2 h-2 rounded-full bg-blue-400 mr-2"></span>Miami: 101 Banking Dr</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-bold mb-4 text-blue-100">Quick Links</h3>
+              <ul className="space-y-2">
+                <li>
+                  <Link to="/About" className="text-blue-200 hover:text-white transition-colors duration-300 flex items-center">
+                    <span className="mr-2">→</span> About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/LoanCalculator" className="text-blue-200 hover:text-white transition-colors duration-300 flex items-center">
+                    <span className="mr-2">→</span> Loan Calculator
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/Status" className="text-blue-200 hover:text-white transition-colors duration-300 flex items-center">
+                    <span className="mr-2">→</span> Check Loan Status
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-xl font-bold mb-4 text-blue-100">Contact Info</h3>
+              <ul className="space-y-2 text-blue-200">
+                <li className="flex items-start">
+                  <svg className="h-5 w-5 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                  quickfunds@gmail.com
+                </li>
+                <li className="flex items-start">
+                  <svg className="h-5 w-5 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                  (123) 456-7890
+                </li>
+                <li className="flex items-start">
+                  <svg className="h-5 w-5 mr-2 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  Mon-Fri 9AM-5PM
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="border-t border-blue-700 mt-8 pt-8 text-center text-blue-200">
+            <p>&copy; {new Date().getFullYear()} Quick Funds. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
