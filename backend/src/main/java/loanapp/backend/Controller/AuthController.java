@@ -1,6 +1,5 @@
 package loanapp.backend.Controller;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,11 +10,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.RestController;
 
 import loanapp.backend.Dtos.UserDto;
-import loanapp.backend.Dtos.UserSecureDto;
+
 import loanapp.backend.Service.UserService;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+
 
 
 
