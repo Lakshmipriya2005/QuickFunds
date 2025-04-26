@@ -1,6 +1,6 @@
 import { useState } from "react"
 import Layout from "../../Layout"
-
+import { useNavigate } from 'react-router-dom';
 export default function LoanApplicationForm() {
   const [formData, setFormData] = useState({
     name: "",
@@ -13,6 +13,7 @@ export default function LoanApplicationForm() {
     amount: 0,
     property: "",
   })
+  const navigate=useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -62,7 +63,8 @@ export default function LoanApplicationForm() {
       handleReset()
     } catch (error) {
       console.error("Error:", error)
-      alert("Something went wrong!")
+      navigate("/Login")
+      alert("Please Login!")
     }
   }
   
