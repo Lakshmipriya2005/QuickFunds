@@ -55,9 +55,11 @@ public class UserService {
     @Transactional
     public String authenticate(UserDto user) {
        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-   if (authentication.isAuthenticated()) {
+   if (authentication.isAuthenticated()) 
+        {
          return jwtService.generateToken(user.getUsername());
-        } else {
+        } else 
+        {
             return "fail";
         }
         //userRepository.updateUserLoggedInStatus(username, "false");
