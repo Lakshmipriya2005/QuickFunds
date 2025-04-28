@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { User, MapPin, Phone, Mail, Edit2, Loader, Save, X } from 'lucide-react';
+import React, { useEffect, useState, useRef } from 'react';
+import { User, MapPin, Phone, Mail, Edit2, Loader, Save, X, Camera } from 'lucide-react';
 
 const DefaultProfile = () => {
+  const fileInputRef = useRef(null);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
   const [isEditMode, setIsEditMode] = useState(false);
+  const [imagePreview, setImagePreview] = useState(null);
   const [profileData, setProfileData] = useState({
     name: '',
     email: '',
@@ -29,7 +31,7 @@ const DefaultProfile = () => {
 
   const fetchProfile = async () => {
     const token = localStorage.getItem('token');
-    const userId = localStorage.getItem('userid');
+    const userId = localStorage.getItem('userId');
     console.log(userId);
 
     try {
@@ -95,6 +97,7 @@ const DefaultProfile = () => {
 
   const handleEditProfile = () => {
     setIsEditMode(true);
+    setImagePreview(null);
   };
 
   const handleCancelEdit = () => {
@@ -109,6 +112,7 @@ const DefaultProfile = () => {
     setIsEditMode(false);
     setError('');
     setMessage('');
+    setImagePreview(null);
   };
 
   const handleChange = (e) => {
@@ -119,44 +123,95 @@ const DefaultProfile = () => {
     });
   };
 
+  const handleImageClick = () => {
+    if (isEditMode) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Preview the selected image
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setImagePreview(event.target.result);
+      };
+      reader.readAsDataURL(file);
+      
+      // Store file in editedData for upload
+      setEditedData({
+        ...editedData,
+        profileImageFile: file
+      });
+    }
+  };
+
   const handleSaveProfile = async () => {
     const token = localStorage.getItem('token');
-    const userId = localStorage.getItem('userid');
+    const userId = localStorage.getItem('userId');
 
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:8080/profile/update/${userId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          phoneNumber: editedData.phoneNumber,
-          address: editedData.address,
-          city: editedData.city,
-          state: editedData.state,
-          // profileImage would typically be handled separately with file upload
-        }),
-      });
+      
+      // Create FormData if there's an image to upload
+      let response;
+      
+      if (editedData.profileImageFile) {
+        const formData = new FormData();
+        formData.append('phoneNumber', editedData.phoneNumber);
+        formData.append('address', editedData.address);
+        formData.append('city', editedData.city);
+        formData.append('state', editedData.state);
+        formData.append('profileImage', editedData.profileImageFile);
+        
+        response = await fetch(`http://localhost:8080/profile/update/${userId}`, {
+          method: "PUT",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+          },
+          body: formData,
+        });
+      } else {
+        // No image to upload, send JSON data
+        response = await fetch(`http://localhost:8080/profile/update/${userId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            phoneNumber: editedData.phoneNumber,
+            address: editedData.address,
+            city: editedData.city,
+            state: editedData.state,
+          }),
+        });
+      }
 
       const data = await response.json();
 
       if (response.status === 200) {
         setMessage('Profile updated successfully!');
         setError('');
+        
+        // Update profile data with new values including image if provided
         setProfileData({
           ...profileData,
           phoneNumber: editedData.phoneNumber,
           address: editedData.address,
           city: editedData.city,
           state: editedData.state,
+          profileImage: data.profileImage || profileData.profileImage, // Use returned image URL or keep current
         });
+        
         setIsEditMode(false);
+        setImagePreview(null);
       } else {
         setError(data.message || 'Error updating profile');
       }
     } catch (error) {
+      console.error("Profile update error:", error);
       setError('Error updating profile. Please try again.');
       setMessage('');
     } finally {
@@ -183,10 +238,27 @@ const DefaultProfile = () => {
           {/* Profile image */}
           <div className="absolute -top-16 left-10">
             <div className="relative">
-              <img 
-                src={profileData.profileImage} 
-                alt="Profile" 
-                className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover bg-white"
+              <div 
+                onClick={handleImageClick}
+                className={`relative w-32 h-32 rounded-full border-4 border-white shadow-lg overflow-hidden ${isEditMode ? 'cursor-pointer' : ''}`}
+              >
+                <img 
+                  src={imagePreview || profileData.profileImage} 
+                  alt="Profile" 
+                  className="w-full h-full object-cover bg-white"
+                />
+                {isEditMode && (
+                  <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center transition-opacity hover:bg-opacity-60">
+                    <Camera className="w-10 h-10 text-white" />
+                  </div>
+                )}
+              </div>
+              <input
+                type="file"
+                ref={fileInputRef}
+                accept="image/*"
+                className="hidden"
+                onChange={handleImageChange}
               />
               <div className="absolute bottom-0 right-0 bg-white rounded-full p-1 shadow-md">
                 <div className="bg-green-500 w-4 h-4 rounded-full"></div>
