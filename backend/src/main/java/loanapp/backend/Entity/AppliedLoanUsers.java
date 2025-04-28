@@ -24,9 +24,7 @@ public class AppliedLoanUsers {
     private int amount;
     private String property;
     private String status = "Pending"; 
-        @OneToOne
+    @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserEntity user;
-
-    
 }

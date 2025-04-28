@@ -45,7 +45,6 @@ public class UserService {
         user.setUsername(dto.getUsername());
         user.setEmail(dto.getEmail());
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
-        user.setIsloggedin("false");
         userRepository.save(user);
         //.updateUserLoggedInStatus(dto.getUsername(), "false");
        // usersecDto.setIsLoggedIn("false");
