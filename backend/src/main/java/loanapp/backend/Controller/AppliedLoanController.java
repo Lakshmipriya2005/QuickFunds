@@ -33,9 +33,11 @@ public class AppliedLoanController {
 public List<UserStatusDto> getAllUserStatuses() {
     return service.getAllUsersStatus();
 }
-@GetMapping("path")
-public String getMethodName(@RequestParam String param) {
-    return new String();
+@GetMapping("/status/{id}")
+public List<UserStatusDto> getUsersById(@PathVariable Long id) {
+ 
+    return service.getUsersById(id);
+   
 }
 
   @PostMapping("/updateStatus/{id}")

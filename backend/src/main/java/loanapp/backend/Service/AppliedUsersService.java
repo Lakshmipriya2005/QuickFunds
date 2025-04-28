@@ -1,5 +1,6 @@
 package loanapp.backend.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -9,45 +10,58 @@ import org.springframework.stereotype.Service;
 import loanapp.backend.Dtos.UserAppliedDto;
 import loanapp.backend.Dtos.UserStatusDto;
 import loanapp.backend.Entity.AppliedLoanUsers;
+import loanapp.backend.Entity.UserEntity;
 import loanapp.backend.Repo.AppliedUsersRepo;
+import loanapp.backend.Repo.UserRepository;
 
 @Service
 public class AppliedUsersService {
 
     @Autowired
     private AppliedUsersRepo repository;
+    @Autowired
+    private UserRepository userRepository; // Assuming you have a UserRepository to fetch UserEntity
 
-    public AppliedLoanUsers apply(UserAppliedDto dto) {
-        // Validate required fields
-        if (isNullOrEmpty(dto.getName()) ||
-            isNullOrEmpty(dto.getEmail()) ||
-            isNullOrEmpty(dto.getPhoneNumber()) ||
-            isNullOrEmpty(dto.getAddress()) ||
-            isNullOrEmpty(dto.getCity()) ||
-            isNullOrEmpty(dto.getState()) ||
-            isNullOrEmpty(dto.getLoanType()) ||
-            dto.getAmount() <= 0 ||
-            isNullOrEmpty(dto.getProperty())) {
-            
-            throw new IllegalArgumentException("All fields must be filled correctly.");
-        }
+    // @Autowired
+    // private UserRepository userRepository; // Assuming you have a UserRepository to fetch UserEntity
 
-        // Mapping DTO to Entity
-        AppliedLoanUsers loan = new AppliedLoanUsers();
-        loan.setName(dto.getName());
-        loan.setEmail(dto.getEmail());
-        loan.setPhoneNumber(dto.getPhoneNumber());
-        loan.setAddress(dto.getAddress());
-        loan.setCity(dto.getCity());
-        loan.setState(dto.getState());
-        loan.setLoanType(dto.getLoanType());
-        loan.setAmount(dto.getAmount());
-        loan.setProperty(dto.getProperty());
-        loan.setStatus("Pending"); // Default status
-
-        return repository.save(loan);
+  public AppliedLoanUsers apply(UserAppliedDto dto) {
+    if (isNullOrEmpty(dto.getName()) ||
+        isNullOrEmpty(dto.getEmail()) ||
+        isNullOrEmpty(dto.getPhoneNumber()) ||
+        isNullOrEmpty(dto.getAddress()) ||
+        isNullOrEmpty(dto.getCity()) ||
+        isNullOrEmpty(dto.getState()) ||
+        isNullOrEmpty(dto.getLoanType()) ||
+        dto.getAmount() <= 0 ||
+        isNullOrEmpty(dto.getProperty()) ||
+        dto.getUserId() <= 0) { // Check userId also
+        throw new IllegalArgumentException("All fields must be filled correctly");
     }
 
+    // // Fetch the UserEntity from DB
+    // UserEntity user = userRepository.findById(dto.getId())
+    //                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+    AppliedLoanUsers loan = new AppliedLoanUsers();
+    loan.setName(dto.getName());
+    loan.setEmail(dto.getEmail());
+    loan.setPhoneNumber(dto.getPhoneNumber());
+    loan.setAddress(dto.getAddress());
+    loan.setCity(dto.getCity());
+    loan.setState(dto.getState());
+    loan.setLoanType(dto.getLoanType());
+    loan.setAmount(dto.getAmount());
+    loan.setProperty(dto.getProperty());
+    loan.setStatus("Pending");
+    loan.setUserId(dto.getUserId()); // Set the userId from the DTO
+    //System.out.println("User ID: " + dto.getUserId());
+    
+    // Now set the user
+    
+
+    return repository.save(loan);
+}
     // Helper method to check for null or blank strings
     private boolean isNullOrEmpty(String str) {
         return str == null || str.trim().isEmpty();
@@ -68,4 +82,16 @@ public class AppliedUsersService {
             return false;
         }
     }
+
+public List<UserStatusDto> getUsersById(Long id) {
+    List<AppliedLoanUsers> applications = repository.findAllByUserId(id);
+    
+    List<UserStatusDto> dtos = new ArrayList<>();
+    for (AppliedLoanUsers app : applications) {
+        dtos.add(new UserStatusDto(app.getId(), app.getName(), app.getEmail(), app.getStatus()));
+    }
+    
+    return dtos;
+}
+
 }
