@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 import logo from '../../assets/logo.jpg'; // Adjust the path as necessary
 import { useNavigate } from 'react-router-dom';
@@ -36,21 +37,18 @@ function LoginForm({ switchToRegister }) {
 
       if (token) {
         localStorage.setItem('token', token);
-        localStorage.setItem('userId', userId); // Store the user ID in local storage if needed
-        //console.log("Token:", token); // Log the token for debugging
+        console.log("Token:", token); // Log the token for debugging
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         navigate("/");
       } else {
         setShowError(true);
       }
- 
       } catch (error) {
         console.error('Login failed:', error);
         setShowError(true);
       }
     }
   };
-  
 
   const handleForgetPassword=()=>{
     navigate("/ResetPassword")

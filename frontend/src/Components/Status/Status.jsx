@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search, FileText, AlertCircle } from 'lucide-react';
 import Layout from '../../Layout';
+import Cookies from 'js-cookie';
 
 const StatusPage = () => {
   const [statusData, setStatusData] = useState([]);
@@ -10,7 +11,7 @@ const StatusPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = Cookies.get('token');
     setIsLoggedIn(!!token);
   }, []);
 
