@@ -15,11 +15,11 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.RestController;
 
 import loanapp.backend.Dtos.UserDto;
-import loanapp.backend.Dtos.UserSecureDto;
+
 import loanapp.backend.Service.UserService;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+
 
 
 
