@@ -11,7 +11,7 @@ const StatusPage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const token = Cookies.get('token');
+    const token = localStorage.getItem('token');
     setIsLoggedIn(!!token);
   }, []);
 
@@ -22,7 +22,8 @@ const StatusPage = () => {
       setIsLoading(true);
       try {
         const token = localStorage.getItem('token');
-        const userId=localStorage.getItem('userId');
+        const userId=localStorage.getItem('userid');
+        console.log(userId);
         const response = await fetch(`http://localhost:8080/loan/status/${userId}`, {
           method: "GET",
           headers: {

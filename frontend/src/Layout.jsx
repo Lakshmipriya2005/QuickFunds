@@ -21,7 +21,9 @@ export default function Layout({ children }) {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('token'); // Remove token from local storage
+    localStorage.removeItem('token');
+     // Remove token from local storage
+     localStorage.removeItem('userid'); // Remove userId from local storage
     setIsLoggedIn(false);
     setIsUserMenuOpen(false);
     navigate("/login");
