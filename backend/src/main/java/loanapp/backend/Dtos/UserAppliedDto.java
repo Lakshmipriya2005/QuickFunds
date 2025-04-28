@@ -17,6 +17,7 @@ public class UserAppliedDto {
     private String loanType;
     private int amount;
     private String property;
+    private long userId;
     
 
     

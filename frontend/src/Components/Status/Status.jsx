@@ -21,9 +21,9 @@ const StatusPage = () => {
 
       setIsLoading(true);
       try {
-        // const token = localStorage.getItem('token');
-        const token = Cookies.get('token');
-        const response = await fetch("http://localhost:8080/loan/status", {
+        const token = localStorage.getItem('token');
+        const userId=localStorage.getItem('userId');
+        const response = await fetch(`http://localhost:8080/loan/status/${userId}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -34,8 +34,9 @@ const StatusPage = () => {
         if (!response.ok) throw new Error("Failed to fetch");
 
         const data = await response.json();
+        console.log(data);
         setStatusData(data);
-        console.log('Status data fetched:', data);
+        //console.log('Status data fetched:', data);
         setError(null);
       } catch (err) {
         console.error('Error fetching status data:', err);

@@ -32,10 +32,11 @@ function LoginForm({ switchToRegister }) {
         );
   
         const token = response.data.token;
+       // console.log(response.data);
+        const userId = response.data.id; // Assuming the user ID is also returned in the response
 
       if (token) {
-       // localStorage.setItem('token', token);
-       Cookies.set('token', token, { expires: 7 });
+        localStorage.setItem('token', token);
         console.log("Token:", token); // Log the token for debugging
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         navigate("/");

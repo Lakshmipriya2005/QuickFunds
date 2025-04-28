@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserProfile {
 
+  
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,7 +24,5 @@ public class UserProfile {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserEntity user;
 
-    @OneToOne
-    @JoinColumn(name = "loan_id", referencedColumnName = "id", nullable = true)
-    private AppliedLoanUsers loan;
+   
 }

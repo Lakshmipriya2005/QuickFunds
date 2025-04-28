@@ -1,10 +1,10 @@
 package loanapp.backend.Service;
-
 import loanapp.backend.Entity.UserEntity;
 import loanapp.backend.Entity.UserProfile;
 import loanapp.backend.Repo.AppliedUsersRepo;
 import loanapp.backend.Repo.UserProfileRepo;
 import loanapp.backend.Repo.UserRepository;
+import loanapp.backend.Dtos.UserProfileDto;
 import loanapp.backend.Entity.AppliedLoanUsers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,26 +45,17 @@ public class UserProfileService {
     }
 
     // fetch profile details
-    public UserProfile getProfileByUserId(Long userId) {
+    public UserProfileDto getProfileByUserId(Long userId) {
         UserEntity user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-
-        return userProfileRepository.findByUser(user)
+    
+        UserProfile userProfile = userProfileRepository.findByUser(user)
                 .orElseThrow(() -> new RuntimeException("Profile not found"));
+    
+        return new UserProfileDto(userProfile.getName(), user.getEmail(),userProfile.getProfileImg());
+    }
+    
+
+    
     }
 
-    // link loan to profile
-    public void linkLoanToProfile(Long userId, Long loanId) {
-        UserEntity user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        UserProfile profile = userProfileRepository.findByUser(user)
-                .orElseThrow(() -> new RuntimeException("Profile not found"));
-
-        AppliedLoanUsers loan = loanUsersRepository.findById(loanId)
-                .orElseThrow(() -> new RuntimeException("Loan not found"));
-
-        profile.setLoan(loan);
-        userProfileRepository.save(profile);
-    }
-}

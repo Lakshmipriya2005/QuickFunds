@@ -21,8 +21,13 @@ public class UserEntity {
 
     @Column(unique = true)
     private String email;
+
+   
     private String password;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserProfile profile;
+   
+    @ManyToOne()
+    private AppliedLoanUsers loan;
 }
