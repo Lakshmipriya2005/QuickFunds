@@ -1,7 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { Facebook, Twitter, Instagram, Linkedin, User, LogIn, LogOut, UserCircle } from "lucide-react";
-import logo from "./assets/logo.jpg"; // Adjust the path to your logo image
+import logo from "./assets/logo.jpg";
+ // Adjust the path to your logo image
+ import Cookies from 'js-cookie';
+
 
 export default function Layout({ children }) {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -13,12 +16,12 @@ export default function Layout({ children }) {
 
   useEffect(() => {
     // Check if token exists to know if user is logged in
-    const token = localStorage.getItem('token');
+    const token = Cookies.get('token');
     setIsLoggedIn(!!token); // true if token exists
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('token'); // remove the token
+    Cookies.remove('token');// remove the token
     setIsLoggedIn(false);
     setIsUserMenuOpen(false);
     navigate("/login");
