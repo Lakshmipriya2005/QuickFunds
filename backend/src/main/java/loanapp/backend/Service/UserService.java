@@ -13,6 +13,8 @@ import org.springframework.security.core.Authentication;
 import loanapp.backend.Dtos.UserDto;
 import loanapp.backend.Dtos.UserSecureDto;
 import loanapp.backend.Entity.UserEntity;
+import loanapp.backend.Entity.UserProfile;
+import loanapp.backend.Repo.UserProfileRepo;
 import loanapp.backend.Repo.UserRepository;
 
 @Service
@@ -29,6 +31,8 @@ public class UserService {
 
     @Autowired
     AuthenticationManager authManager;
+    @Autowired
+    private UserProfileRepo profileRepo;
 
     public String register(UserDto dto) {
         if (userRepository.findByUsername(dto.getUsername())!=null) {
@@ -45,8 +49,12 @@ public class UserService {
         user.setUsername(dto.getUsername());
         user.setEmail(dto.getEmail());
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
-       
+       UserProfile profile = new UserProfile();
+       profile.setName(dto.getUsername());
+       profile.setEmail(dto.getEmail());
+      // profile.setUserId(user);
         userRepository.save(user);
+        profileRepo.save(profile);
         
         
         return "User registered successfully!";

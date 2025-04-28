@@ -16,12 +16,12 @@ export default function Layout({ children }) {
 
   useEffect(() => {
     // Check if token exists to know if user is logged in
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token'); // or use Cookies.get('token') if you are using cookies
     setIsLoggedIn(!!token); // true if token exists
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');// remove the token
+    localStorage.removeItem('token'); // Remove token from local storage
     setIsLoggedIn(false);
     setIsUserMenuOpen(false);
     navigate("/login");

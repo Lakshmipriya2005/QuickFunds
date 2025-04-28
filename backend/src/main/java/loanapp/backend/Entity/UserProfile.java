@@ -17,12 +17,19 @@ public class UserProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String profileImg;
+    private String profileImg="default.png";
     private String name;
+    private String Email;
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserEntity user;
 
+    public String getProfileImg() {
+        return profileImg;
+    }
+    public void setProfileImg(String profileImg) {
+        this.profileImg = profileImg != null ? profileImg : "default.png";  // Ensure default if null
+    }
    
 }
