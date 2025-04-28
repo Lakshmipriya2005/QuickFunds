@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { User, MapPin, Phone, Mail, Edit2, Loader } from 'lucide-react';
+import { User, MapPin, Phone, Mail, Edit2, Loader, Save, X } from 'lucide-react';
 
 const DefaultProfile = () => {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const [isEditMode, setIsEditMode] = useState(false);
   const [profileData, setProfileData] = useState({
     name: '',
     email: '',
@@ -14,66 +15,153 @@ const DefaultProfile = () => {
     state: '',
     profileImage: '',
   });
+  const [editedData, setEditedData] = useState({
+    phoneNumber: '',
+    address: '',
+    city: '',
+    state: '',
+    profileImage: '',
+  });
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      const token = localStorage.getItem('token');
-      const userId = localStorage.getItem('userId');
-      console.log(userId);
-
-      try {
-        console.log("Hello welcome");
-        setLoading(true);
-        const response = await fetch(`http://localhost:8080/profile/get/${userId}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-          },
-        });
-       
-        const data = await response.json();
-  
-        if (response.status === 200) {
-          setMessage('Profile retrieved successfully!');
-          setError('');
-          // Set profile data from API response
-          // Assuming the API returns user profile information
-          setProfileData({
-            name: data.name || 'John Doe',
-            email: data.email || 'johndoe@example.com',
-            phoneNumber: data.phoneNumber || '+1 (555) 123-4567',
-            address: data.address || '123 Main Street',
-            city: data.city || 'New York',
-            state: data.state || 'NY',
-            profileImage: data.profileImage || '/api/placeholder/150/150',
-          });
-        }
-      } catch (error) {
-        setError('Error retrieving profile. Please try again.');
-        setMessage('');
-        // Set default data in case of error
-        setProfileData({
-          name: 'User',
-          email: 'user@example.com',
-          phoneNumber: 'Not available',
-          address: 'Not available',
-          city: 'Not available',
-          state: 'Not available',
-          profileImage: '/api/placeholder/150/150',
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-    
     fetchProfile();
   }, []);
 
+  const fetchProfile = async () => {
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userid');
+    console.log(userId);
+
+    try {
+      console.log("Hello welcome");
+      setLoading(true);
+      const response = await fetch(`http://localhost:8080/profile/get/${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+      });
+     
+      const data = await response.json();
+
+      if (response.status === 200) {
+        setMessage('');
+        setError('');
+        // Set profile data from API response
+        const userData = {
+          name: data.username || 'John Doe',
+          email: data.email || 'johndoe@example.com',
+          phoneNumber: data.phoneNumber || '+1 (555) 123-4567',
+          address: data.address || '123 Main Street',
+          city: data.city || 'New York',
+          state: data.state || 'NY',
+          profileImage: data.profileImage || '/api/placeholder/150/150',
+        };
+        setProfileData(userData);
+        setEditedData({
+          phoneNumber: userData.phoneNumber,
+          address: userData.address,
+          city: userData.city,
+          state: userData.state,
+          profileImage: userData.profileImage,
+        });
+      }
+    } catch (error) {
+      setError('Error retrieving profile. Please try again.');
+      setMessage('');
+      // Set default data in case of error
+      const defaultData = {
+        name: 'User',
+        email: 'user@example.com',
+        phoneNumber: 'Not available',
+        address: 'Not available',
+        city: 'Not available',
+        state: 'Not available',
+        profileImage: '/api/placeholder/150/150',
+      };
+      setProfileData(defaultData);
+      setEditedData({
+        phoneNumber: defaultData.phoneNumber,
+        address: defaultData.address,
+        city: defaultData.city,
+        state: defaultData.state,
+        profileImage: defaultData.profileImage,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleEditProfile = () => {
-    // Navigate to edit profile page or open edit modal
-    console.log("Edit profile clicked");
-    // You could add navigation here: navigate('/edit-profile');
+    setIsEditMode(true);
+  };
+
+  const handleCancelEdit = () => {
+    // Reset edited data to original profile data
+    setEditedData({
+      phoneNumber: profileData.phoneNumber,
+      address: profileData.address,
+      city: profileData.city,
+      state: profileData.state,
+      profileImage: profileData.profileImage,
+    });
+    setIsEditMode(false);
+    setError('');
+    setMessage('');
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditedData({
+      ...editedData,
+      [name]: value,
+    });
+  };
+
+  const handleSaveProfile = async () => {
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userid');
+
+    try {
+      setLoading(true);
+      const response = await fetch(`http://localhost:8080/profile/update/${userId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          phoneNumber: editedData.phoneNumber,
+          address: editedData.address,
+          city: editedData.city,
+          state: editedData.state,
+          // profileImage would typically be handled separately with file upload
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.status === 200) {
+        setMessage('Profile updated successfully!');
+        setError('');
+        setProfileData({
+          ...profileData,
+          phoneNumber: editedData.phoneNumber,
+          address: editedData.address,
+          city: editedData.city,
+          state: editedData.state,
+        });
+        setIsEditMode(false);
+      } else {
+        setError(data.message || 'Error updating profile');
+      }
+    } catch (error) {
+      setError('Error updating profile. Please try again.');
+      setMessage('');
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (loading) {
@@ -122,13 +210,32 @@ const DefaultProfile = () => {
           <div className="mt-16 sm:mt-5 sm:ml-32">
             <div className="flex justify-between items-center mb-6">
               <h1 className="text-2xl font-bold text-gray-800">{profileData.name}</h1>
-              <button 
-                onClick={handleEditProfile}
-                className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-200 shadow-sm"
-              >
-                <Edit2 className="w-4 h-4 mr-2" />
-                Edit Profile
-              </button>
+              {!isEditMode ? (
+                <button 
+                  onClick={handleEditProfile}
+                  className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-200 shadow-sm"
+                >
+                  <Edit2 className="w-4 h-4 mr-2" />
+                  Edit Profile
+                </button>
+              ) : (
+                <div className="flex space-x-2">
+                  <button 
+                    onClick={handleCancelEdit}
+                    className="flex items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all duration-200 shadow-sm"
+                  >
+                    <X className="w-4 h-4 mr-2" />
+                    Cancel
+                  </button>
+                  <button 
+                    onClick={handleSaveProfile}
+                    className="flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-200 shadow-sm"
+                  >
+                    <Save className="w-4 h-4 mr-2" />
+                    Save
+                  </button>
+                </div>
+              )}
             </div>
             
             {/* Contact Information */}
@@ -138,7 +245,7 @@ const DefaultProfile = () => {
                   <Mail className="w-5 h-5 text-blue-600" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Email</p>
+                  <p className="text-sm text-gray-500">Email (cannot be changed)</p>
                   <p className="text-gray-800">{profileData.email}</p>
                 </div>
               </div>
@@ -149,7 +256,17 @@ const DefaultProfile = () => {
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Phone</p>
-                  <p className="text-gray-800">{profileData.phoneNumber}</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="phoneNumber"
+                      value={editedData.phoneNumber}
+                      onChange={handleChange}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                    />
+                  ) : (
+                    <p className="text-gray-800">{profileData.phoneNumber}</p>
+                  )}
                 </div>
               </div>
             </div>
@@ -164,17 +281,47 @@ const DefaultProfile = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <p className="text-sm text-gray-500">Street Address</p>
-                  <p className="text-gray-800">{profileData.address}</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="address"
+                      value={editedData.address}
+                      onChange={handleChange}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                    />
+                  ) : (
+                    <p className="text-gray-800">{profileData.address}</p>
+                  )}
                 </div>
                 
                 <div>
                   <p className="text-sm text-gray-500">City</p>
-                  <p className="text-gray-800">{profileData.city}</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="city"
+                      value={editedData.city}
+                      onChange={handleChange}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                    />
+                  ) : (
+                    <p className="text-gray-800">{profileData.city}</p>
+                  )}
                 </div>
                 
                 <div>
                   <p className="text-sm text-gray-500">State</p>
-                  <p className="text-gray-800">{profileData.state}</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="state"
+                      value={editedData.state}
+                      onChange={handleChange}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                    />
+                  ) : (
+                    <p className="text-gray-800">{profileData.state}</p>
+                  )}
                 </div>
               </div>
             </div>
