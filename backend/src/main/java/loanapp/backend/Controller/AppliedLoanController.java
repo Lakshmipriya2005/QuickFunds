@@ -11,6 +11,9 @@ import loanapp.backend.Dtos.UserAppliedDto;
 import loanapp.backend.Dtos.UserStatusDto;
 import loanapp.backend.Entity.AppliedLoanUsers;
 import loanapp.backend.Service.AppliedUsersService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -30,6 +33,11 @@ public class AppliedLoanController {
 public List<UserStatusDto> getAllUserStatuses() {
     return service.getAllUsersStatus();
 }
+@GetMapping("path")
+public String getMethodName(@RequestParam String param) {
+    return new String();
+}
+
   @PostMapping("/updateStatus/{id}")
     public ResponseEntity<String> updateApplicationStatus(@PathVariable Long id, @RequestBody Map<String, String> request) {
         String status = request.get("status");
