@@ -11,6 +11,7 @@ import DashboardStatus from './Components/Status/DashboardStatus'
 import LoanCalculator from './Components/Calculator/LoanCalculator'
 import ApplyLoan from './Components/ApplyLoan/ApplyLoan'
 import About from './Components/About/About'
+import DefaultProfile from './Components/Profile/DefaultProfile'
 
 //import Layout from "./Layout";
 function App() {
@@ -35,6 +36,7 @@ function App() {
       <Route  path="/ApplyLoan"   element={<ApplyLoan/>} />
       <Route  path="/About"   element={<About/>} />
       <Route path="/DashboardStatus" element={<DashboardStatus />} />
+      <Route path='/profile' element={<DefaultProfile/>}/>
     </Routes>
     
     </BrowserRouter>

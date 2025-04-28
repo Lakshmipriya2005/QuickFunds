@@ -16,6 +16,7 @@ export default function LoanApplicationForm() {
     property: "",
   })
   const navigate=useNavigate();
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -44,18 +45,25 @@ export default function LoanApplicationForm() {
       property: "",
     })
   }
+ 
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-     // const token = localStorage.getItem('token');
-     const token = Cookies.get('token');
+      const token = localStorage.getItem('token');
+      const userId=localStorage.getItem('userId');
+      const dataToSend = {
+        ...formData,
+        userId: userId  // Add userId to the JSON
+      };
       const response = await fetch("http://localhost:8080/loan/apply", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(dataToSend),
+            
+        
       })
   
       if (!response.ok) throw new Error("Failed to submit application")

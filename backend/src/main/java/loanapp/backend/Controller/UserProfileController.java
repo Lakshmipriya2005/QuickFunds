@@ -1,5 +1,6 @@
 package loanapp.backend.Controller;
 
+import loanapp.backend.Dtos.UserProfileDto;
 import loanapp.backend.Entity.UserProfile;
 import loanapp.backend.Service.UserProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +23,13 @@ public class UserProfileController {
     }
 
     // fetch profile
-    @GetMapping("/{userId}")
-    public UserProfile getProfile(@PathVariable Long userId) {
-        return userProfileService.getProfileByUserId(userId);
+    
+    @GetMapping("/get/{id}")
+    public UserProfileDto getProfile(@PathVariable Long id) {
+        
+        return userProfileService.getProfileByUserId(id);
     }
 
     // link loan to profile after applying loan
-    @PostMapping("/linkLoan")
-    public String linkLoan(@RequestParam Long userId, @RequestParam Long loanId) {
-        userProfileService.linkLoanToProfile(userId, loanId);
-        return "Loan linked to profile successfully";
-    }
+    
 }
