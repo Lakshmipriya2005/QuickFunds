@@ -42,14 +42,12 @@ function LoginForm({ switchToRegister }) {
       } else {
         setShowError(true);
       }
- 
       } catch (error) {
         console.error('Login failed:', error);
         setShowError(true);
       }
     }
   };
-  
 
   const handleForgetPassword=()=>{
     navigate("/ResetPassword")
