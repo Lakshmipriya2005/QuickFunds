@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Layout from "../../Layout"
 import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
+
 
 export default function LoanApplicationForm() {
   const [formData, setFormData] = useState({

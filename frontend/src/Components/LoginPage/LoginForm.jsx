@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-import Cookies from 'js-cookie';
+
 
 import logo from '../../assets/logo.jpg'; // Adjust the path as necessary
 import { useNavigate } from 'react-router-dom';

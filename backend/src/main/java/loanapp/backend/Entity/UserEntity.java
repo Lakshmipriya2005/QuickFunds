@@ -25,7 +25,7 @@ public class UserEntity {
    
     private String password;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private UserProfile profile;
    
     @ManyToOne()
