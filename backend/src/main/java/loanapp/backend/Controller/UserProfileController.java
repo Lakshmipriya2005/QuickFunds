@@ -15,11 +15,9 @@ public class UserProfileController {
     private UserProfileService userProfileService;
 
     // create or update profile
-    @PostMapping("/createOrUpdate")
-    public UserProfile createOrUpdateProfile(@RequestParam Long userId,
-                                             @RequestParam String profileImg,
-                                             @RequestParam String name) {
-        return userProfileService.createOrUpdateProfile(userId, profileImg, name);
+    @PostMapping("/createOrUpdate/{id}")
+    public UserProfile createOrUpdateProfile(@RequestBody UserProfile profileDtos,@PathVariable long id) {
+        return userProfileService.createOrUpdateProfile(profileDtos,id);
     }
 
     // fetch profile

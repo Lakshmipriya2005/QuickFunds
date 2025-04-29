@@ -9,4 +9,6 @@ import loanapp.backend.Entity.UserEntity;
 
 public interface UserProfileRepo extends JpaRepository<UserProfile, Long> {
     Optional<UserProfile> findByUser(UserEntity user);
+
+    Optional<UserProfile> findByRefId(long id);
 }

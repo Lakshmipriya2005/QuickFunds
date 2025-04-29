@@ -38,7 +38,7 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody UserDto userDto) {
         String rsponse=userService.register(userDto);
-        System.out.println(rsponse);
+        
         return ResponseEntity.ok(rsponse);
     }
     @PostMapping("/login")
@@ -48,7 +48,7 @@ public ResponseEntity<?> login(@RequestBody UserDto userDto, HttpServletRequest 
     if (!jwt.equals("fail")) {
         HttpSession session = request.getSession(true); 
         session.setAttribute("username", userDto.getUsername());
-         int userId = userRepo.getIdByName(userDto.getUsername());
+        int userId = userRepo.getIdByName(userDto.getUsername());
         Map<String, String> tokenResponse = new HashMap<>();
         tokenResponse.put("token", jwt);
         tokenResponse.put("username", userDto.getUsername());
