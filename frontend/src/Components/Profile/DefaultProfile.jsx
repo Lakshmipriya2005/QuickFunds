@@ -1,6 +1,6 @@
 
-import React, { useEffect, useState } from 'react';
-import { User, MapPin, Phone, Mail, Edit2, Loader, Save, X } from 'lucide-react';
+import React, { useEffect, useState,useRef } from 'react';
+import { User, MapPin, Phone, Mail, Edit2, Loader, Save, X,Camera } from 'lucide-react';
 import Layout from '../../Layout'; 
 
 
@@ -151,7 +151,7 @@ const DefaultProfile = () => {
 
   const handleSaveProfile = async () => {
     const token = localStorage.getItem('token');
-    const userId = localStorage.getItem('userId');
+    const userId = localStorage.getItem('userid');
 
     try {
       setLoading(true);
@@ -172,7 +172,7 @@ const DefaultProfile = () => {
       });
       
       // Create FormData if there's an image to upload
-      let response;
+    
       
       if (editedData.profileImageFile) {
         const formData = new FormData();
@@ -182,8 +182,8 @@ const DefaultProfile = () => {
         formData.append('state', editedData.state);
         formData.append('profileImage', editedData.profileImageFile);
         
-        response = await fetch(`http://localhost:8080/profile/update/${userId}`, {
-          method: "PUT",
+       const  response = await fetch(`http://localhost:8080/profile/createOrUpdate/${userId}`, {
+          method: "POST",
           headers: {
             "Authorization": `Bearer ${token}`,
           },
@@ -191,8 +191,8 @@ const DefaultProfile = () => {
         });
       } else {
         // No image to upload, send JSON data
-        response = await fetch(`http://localhost:8080/profile/update/${userId}`, {
-          method: "PUT",
+        const response = await fetch(`http://localhost:8080/profile/createOrUpdate/${userId}`, {
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`,
