@@ -1,6 +1,7 @@
 package loanapp.backend.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -52,8 +53,13 @@ public class UserService {
        UserProfile profile = new UserProfile();
        profile.setName(dto.getUsername());
        profile.setEmail(dto.getEmail());
+       userRepository.save(user);
+
+       UserEntity usr=userRepository.findByUsername(dto.getUsername());
+       System.out.println(usr.getId());
+       profile.setRefId(usr.getId());
       // profile.setUserId(user);
-        userRepository.save(user);
+       
         profileRepo.save(profile);
         
         

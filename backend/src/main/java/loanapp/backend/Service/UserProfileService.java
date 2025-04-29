@@ -23,25 +23,40 @@ public class UserProfileService {
  
 
     // create or update profile
-   
-    public UserProfile createOrUpdateProfile(Long userId, String profileImg, String name) {
-        UserEntity user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
-        Optional<UserProfile> existingProfile = userProfileRepository.findByUser(user);
-
-        UserProfile profile;
-        if (existingProfile.isPresent()) {
-            profile = existingProfile.get();
-        } else {
-            profile = new UserProfile();
-            profile.setUser(user);
+    public UserProfile createOrUpdateProfile(UserProfile profileDtos,long id) {
+        // Assuming you're identifying user by email
+        Optional<UserProfile> existingOpt = userProfileRepository.findByRefId(id);
+    
+        UserProfile existing = existingOpt.orElse(new UserProfile());
+    
+        // Now update only non-null fields
+        if (profileDtos.getName() != null) {
+            existing.setName(profileDtos.getName());
         }
-        profile.setProfileImg(profileImg);
-        profile.setName(name);
-
-        return userProfileRepository.save(profile);
+        if (profileDtos.getProfileImg() != null) {
+            existing.setProfileImg(profileDtos.getProfileImg());
+        }
+        if (profileDtos.getPhoneNumber() != null) {
+            existing.setPhoneNumber(profileDtos.getPhoneNumber());
+        }
+        if (profileDtos.getAddress() != null) {
+            existing.setAddress(profileDtos.getAddress());
+        }
+        if (profileDtos.getCity() != null) {
+            existing.setCity(profileDtos.getCity());
+        }
+        if (profileDtos.getState() != null) {
+            existing.setState(profileDtos.getState());
+        }
+    
+        // Email usually doesn't change, but if you allow it:
+        if (profileDtos.getEmail() != null) {
+            existing.setEmail(profileDtos.getEmail());
+        }
+    
+        return userProfileRepository.save(existing);
     }
+    
 
     // fetch profile details
    
@@ -52,15 +67,25 @@ public class UserProfileService {
             UserEntity user = userRepository.findById(userId)
                     .orElseThrow(() -> new RuntimeException("User not found"));
     
-            UserProfile userProfile = user.getProfile();  // Profile is fetched eagerly here
+            Optional<UserProfile> userProfile = userProfileRepository.findByRefId(userId); // Profile is fetched eagerly here
     
-            if (userProfile == null) {
-                userProfile = new UserProfile();  // In case no profile exists, provide a default one
-                userProfile.setProfileImg("default.png");  // Ensure default value
+            // if (userProfile == null) {
+            //     userProfile = Optional.ofNullable(new UserProfile());  // In case no profile exists, provide a default one
+                userProfile.ifPresent(profile -> profile.setProfileImg("default.png"));  // Ensure default value
                 
-            }
+            // }
     
-            return new UserProfileDto(user.getUsername(), user.getEmail(), userProfile.getProfileImg());
+            return new UserProfileDto(
+                userProfile.map(UserProfile::getName).orElse("Unknown"), 
+                userProfile.map(UserProfile::getEmail).orElse("Unknown"), 
+                userProfile.map(UserProfile::getProfileImg).orElse("default.png"),
+                userProfile.map(UserProfile::getPhoneNumber).orElse("Not Available"),
+                userProfile.map(UserProfile::getAddress).orElse("Not Available"),
+                userProfile.map(UserProfile::getCity).orElse("Not Available"),
+                userProfile.map(UserProfile::getState).orElse("Not Available")
+                
+            );
+                  
         }
     }
     

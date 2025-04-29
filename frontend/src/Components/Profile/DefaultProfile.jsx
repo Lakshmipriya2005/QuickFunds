@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { User, MapPin, Phone, Mail, Edit2, Loader, Save, X } from 'lucide-react';
+import Layout from '../../Layout'; 
 
 const DefaultProfile = () => {
   const [message, setMessage] = useState('');
@@ -33,7 +34,6 @@ const DefaultProfile = () => {
     console.log(userId);
 
     try {
-      console.log("Hello welcome");
       setLoading(true);
       const response = await fetch(`http://localhost:8080/profile/get/${userId}`, {
         method: "GET",
@@ -52,10 +52,10 @@ const DefaultProfile = () => {
         const userData = {
           name: data.username || 'John Doe',
           email: data.email || 'johndoe@example.com',
-          phoneNumber: data.phoneNumber || '+1 (555) 123-4567',
-          address: data.address || '123 Main Street',
-          city: data.city || 'New York',
-          state: data.state || 'NY',
+          phoneNumber: data.phoneNumber || 'Not Available',
+          address: data.address || 'Not Available',
+          city: data.city || 'Not Available',
+          state: data.state || 'Not Available',
           profileImage: data.profileImage || '/api/placeholder/150/150',
         };
         setProfileData(userData);
@@ -125,8 +125,8 @@ const DefaultProfile = () => {
 
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:8080/profile/update/${userId}`, {
-        method: "PUT",
+      const response = await fetch(`http://localhost:8080/profile/createOrUpdate/${userId}`, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`,
@@ -166,14 +166,18 @@ const DefaultProfile = () => {
 
   if (loading) {
     return (
+      <Layout>
+      
       <div className="flex items-center justify-center min-h-screen bg-gray-50">
         <Loader className="w-10 h-10 text-blue-600 animate-spin" />
         <span className="ml-2 text-lg font-medium text-gray-700">Loading profile...</span>
       </div>
+      </Layout>
     );
   }
 
   return (
+    <Layout>
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
         {/* Header with background */}
@@ -245,7 +249,7 @@ const DefaultProfile = () => {
                   <Mail className="w-5 h-5 text-blue-600" />
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Email (cannot be changed)</p>
+                  <p className="text-sm text-gray-500"></p>
                   <p className="text-gray-800">{profileData.email}</p>
                 </div>
               </div>
@@ -329,6 +333,7 @@ const DefaultProfile = () => {
         </div>
       </div>
     </div>
+    </Layout>
   );
 };
 

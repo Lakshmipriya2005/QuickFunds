@@ -19,7 +19,14 @@ public class UserProfile {
 
     private String profileImg="default.png";
     private String name;
+    private long refId;
     private String Email;
+    private String phoneNumber;
+    private String address;
+    private String city;
+
+    private String state;
+   
 
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -31,5 +38,6 @@ public class UserProfile {
     public void setProfileImg(String profileImg) {
         this.profileImg = profileImg != null ? profileImg : "default.png";  // Ensure default if null
     }
+ 
    
 }

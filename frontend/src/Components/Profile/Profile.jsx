@@ -26,7 +26,7 @@ const ProfileForm = () => {
     formData.append('name', name);  // Append name
 
     try {
-      const response = await axios.post('http://localhost:8080/profile/createOrUpdate', formData, {
+      const response = await axios.post(`http://localhost:8080/profile/createOrUpdate/${userId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${localStorage.getItem('token')}`,  // Assuming the token is stored in localStorage
