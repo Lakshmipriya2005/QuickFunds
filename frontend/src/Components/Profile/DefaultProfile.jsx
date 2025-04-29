@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { User, MapPin, Phone, Mail, Edit2, Loader, Save, X, Camera } from 'lucide-react';
+import Layout from '../../Layout';  
 
 const DefaultProfile = () => {
   const fileInputRef = useRef(null);
@@ -31,7 +32,7 @@ const DefaultProfile = () => {
 
   const fetchProfile = async () => {
     const token = localStorage.getItem('token');
-    const userId = localStorage.getItem('userId');
+    const userId = localStorage.getItem('userid');
     console.log(userId);
 
     try {
@@ -221,14 +222,17 @@ const DefaultProfile = () => {
 
   if (loading) {
     return (
+      <Layout>
       <div className="flex items-center justify-center min-h-screen bg-gray-50">
         <Loader className="w-10 h-10 text-blue-600 animate-spin" />
         <span className="ml-2 text-lg font-medium text-gray-700">Loading profile...</span>
       </div>
+      </Layout>
     );
   }
 
   return (
+    <Layout>
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
         {/* Header with background */}
@@ -401,6 +405,7 @@ const DefaultProfile = () => {
         </div>
       </div>
     </div>
+    </Layout>
   );
 };
 
