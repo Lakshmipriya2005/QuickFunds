@@ -37,6 +37,7 @@ function LoginForm({ switchToRegister }) {
 
       if (token) {
         localStorage.setItem('token', token);
+        localStorage.setItem('userid', userId); // Store the user ID in local storage
         console.log("Token:", token); // Log the token for debugging
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         navigate("/");

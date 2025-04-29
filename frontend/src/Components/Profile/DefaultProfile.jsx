@@ -1,50 +1,335 @@
-import React, { useEffect,useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { User, MapPin, Phone, Mail, Edit2, Loader, Save, X } from 'lucide-react';
 
 const DefaultProfile = () => {
-    const [message, setMessage] = useState('');
-      const [error, setError] = useState('');
-    
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [profileData, setProfileData] = useState({
+    name: '',
+    email: '',
+    phoneNumber: '',
+    address: '',
+    city: '',
+    state: '',
+    profileImage: '',
+  });
+  const [editedData, setEditedData] = useState({
+    phoneNumber: '',
+    address: '',
+    city: '',
+    state: '',
+    profileImage: '',
+  });
 
-    useEffect(()=>{
-        const fetchProfile= async()=>{
-            const token=localStorage.getItem('token');
-            const userId=localStorage.getItem('userId');
-            console.log(userId);
-            
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
+  const fetchProfile = async () => {
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userid');
+    console.log(userId);
 
     try {
-        console.log("Hello welcome");
-        const response = await fetch(`http://localhost:8080/profile/get/${userId}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-          },
-        });
-        console.log("Hello welcome");
-        const data = await response.json();
-         console.log(data)
-        //console.log(response.data);
-  
-        if (response.status === 200) {
-          setMessage('Profile updated successfully!');
-          setError('');
-        }
-      } catch (error) {
-        setError('Error updating profile. Please try again.');
+      console.log("Hello welcome");
+      setLoading(true);
+      const response = await fetch(`http://localhost:8080/profile/get/${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+      });
+     
+      const data = await response.json();
+
+      if (response.status === 200) {
         setMessage('');
+        setError('');
+        // Set profile data from API response
+        const userData = {
+          name: data.username || 'John Doe',
+          email: data.email || 'johndoe@example.com',
+          phoneNumber: data.phoneNumber || '+1 (555) 123-4567',
+          address: data.address || '123 Main Street',
+          city: data.city || 'New York',
+          state: data.state || 'NY',
+          profileImage: data.profileImage || '/api/placeholder/150/150',
+        };
+        setProfileData(userData);
+        setEditedData({
+          phoneNumber: userData.phoneNumber,
+          address: userData.address,
+          city: userData.city,
+          state: userData.state,
+          profileImage: userData.profileImage,
+        });
       }
-    
+    } catch (error) {
+      setError('Error retrieving profile. Please try again.');
+      setMessage('');
+      // Set default data in case of error
+      const defaultData = {
+        name: 'User',
+        email: 'user@example.com',
+        phoneNumber: 'Not available',
+        address: 'Not available',
+        city: 'Not available',
+        state: 'Not available',
+        profileImage: '/api/placeholder/150/150',
+      };
+      setProfileData(defaultData);
+      setEditedData({
+        phoneNumber: defaultData.phoneNumber,
+        address: defaultData.address,
+        city: defaultData.city,
+        state: defaultData.state,
+        profileImage: defaultData.profileImage,
+      });
+    } finally {
+      setLoading(false);
     }
-    fetchProfile();
-}
+  };
 
-,[])
+  const handleEditProfile = () => {
+    setIsEditMode(true);
+  };
+
+  const handleCancelEdit = () => {
+    // Reset edited data to original profile data
+    setEditedData({
+      phoneNumber: profileData.phoneNumber,
+      address: profileData.address,
+      city: profileData.city,
+      state: profileData.state,
+      profileImage: profileData.profileImage,
+    });
+    setIsEditMode(false);
+    setError('');
+    setMessage('');
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditedData({
+      ...editedData,
+      [name]: value,
+    });
+  };
+
+  const handleSaveProfile = async () => {
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userid');
+
+    try {
+      setLoading(true);
+      const response = await fetch(`http://localhost:8080/profile/update/${userId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          phoneNumber: editedData.phoneNumber,
+          address: editedData.address,
+          city: editedData.city,
+          state: editedData.state,
+          // profileImage would typically be handled separately with file upload
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.status === 200) {
+        setMessage('Profile updated successfully!');
+        setError('');
+        setProfileData({
+          ...profileData,
+          phoneNumber: editedData.phoneNumber,
+          address: editedData.address,
+          city: editedData.city,
+          state: editedData.state,
+        });
+        setIsEditMode(false);
+      } else {
+        setError(data.message || 'Error updating profile');
+      }
+    } catch (error) {
+      setError('Error updating profile. Please try again.');
+      setMessage('');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+        <Loader className="w-10 h-10 text-blue-600 animate-spin" />
+        <span className="ml-2 text-lg font-medium text-gray-700">Loading profile...</span>
+      </div>
+    );
+  }
+
   return (
-    <div>
-      hi {message}
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+        {/* Header with background */}
+        <div className="h-32 bg-gradient-to-r from-blue-500 to-blue-700"></div>
+        
+        <div className="relative px-6 py-10 sm:px-10">
+          {/* Profile image */}
+          <div className="absolute -top-16 left-10">
+            <div className="relative">
+              <img 
+                src={profileData.profileImage} 
+                alt="Profile" 
+                className="w-32 h-32 rounded-full border-4 border-white shadow-lg object-cover bg-white"
+              />
+              <div className="absolute bottom-0 right-0 bg-white rounded-full p-1 shadow-md">
+                <div className="bg-green-500 w-4 h-4 rounded-full"></div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Error/Success Messages */}
+          {error && (
+            <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md text-sm">
+              {error}
+            </div>
+          )}
+          {message && (
+            <div className="mb-4 p-3 bg-green-100 text-green-700 rounded-md text-sm">
+              {message}
+            </div>
+          )}
+          
+          {/* User info */}
+          <div className="mt-16 sm:mt-5 sm:ml-32">
+            <div className="flex justify-between items-center mb-6">
+              <h1 className="text-2xl font-bold text-gray-800">{profileData.name}</h1>
+              {!isEditMode ? (
+                <button 
+                  onClick={handleEditProfile}
+                  className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-200 shadow-sm"
+                >
+                  <Edit2 className="w-4 h-4 mr-2" />
+                  Edit Profile
+                </button>
+              ) : (
+                <div className="flex space-x-2">
+                  <button 
+                    onClick={handleCancelEdit}
+                    className="flex items-center px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-all duration-200 shadow-sm"
+                  >
+                    <X className="w-4 h-4 mr-2" />
+                    Cancel
+                  </button>
+                  <button 
+                    onClick={handleSaveProfile}
+                    className="flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all duration-200 shadow-sm"
+                  >
+                    <Save className="w-4 h-4 mr-2" />
+                    Save
+                  </button>
+                </div>
+              )}
+            </div>
+            
+            {/* Contact Information */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <div className="flex items-center space-x-3">
+                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-100">
+                  <Mail className="w-5 h-5 text-blue-600" />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Email (cannot be changed)</p>
+                  <p className="text-gray-800">{profileData.email}</p>
+                </div>
+              </div>
+              
+              <div className="flex items-center space-x-3">
+                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-blue-100">
+                  <Phone className="w-5 h-5 text-blue-600" />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Phone</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="phoneNumber"
+                      value={editedData.phoneNumber}
+                      onChange={handleChange}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                    />
+                  ) : (
+                    <p className="text-gray-800">{profileData.phoneNumber}</p>
+                  )}
+                </div>
+              </div>
+            </div>
+            
+            {/* Address Information */}
+            <div className="bg-gray-50 p-6 rounded-xl">
+              <div className="flex items-center mb-4">
+                <MapPin className="w-5 h-5 text-blue-600 mr-2" />
+                <h2 className="text-lg font-semibold text-gray-800">Address Information</h2>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <p className="text-sm text-gray-500">Street Address</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="address"
+                      value={editedData.address}
+                      onChange={handleChange}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                    />
+                  ) : (
+                    <p className="text-gray-800">{profileData.address}</p>
+                  )}
+                </div>
+                
+                <div>
+                  <p className="text-sm text-gray-500">City</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="city"
+                      value={editedData.city}
+                      onChange={handleChange}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                    />
+                  ) : (
+                    <p className="text-gray-800">{profileData.city}</p>
+                  )}
+                </div>
+                
+                <div>
+                  <p className="text-sm text-gray-500">State</p>
+                  {isEditMode ? (
+                    <input
+                      type="text"
+                      name="state"
+                      value={editedData.state}
+                      onChange={handleChange}
+                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
+                    />
+                  ) : (
+                    <p className="text-gray-800">{profileData.state}</p>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default DefaultProfile
+export default DefaultProfile;

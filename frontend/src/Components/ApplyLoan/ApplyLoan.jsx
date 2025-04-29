@@ -50,7 +50,7 @@ export default function LoanApplicationForm() {
     e.preventDefault()
     try {
       const token = localStorage.getItem('token');
-      const userId=localStorage.getItem('userId');
+      const userId=localStorage.getItem('userid');
       const dataToSend = {
         ...formData,
         userId: userId  // Add userId to the JSON
