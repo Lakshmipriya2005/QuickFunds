@@ -31,7 +31,7 @@ const DefaultProfile = () => {
 
   const fetchProfile = async () => {
     const token = localStorage.getItem('token');
-    const userId = localStorage.getItem('userId');
+    const userId = localStorage.getItem('userid');
     console.log(userId);
 
     try {
