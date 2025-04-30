@@ -15,10 +15,44 @@ export default function Layout({ children }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if token exists to know if user is logged in
-    const token = localStorage.getItem('token'); // or use Cookies.get('token') if you are using cookies
-    setIsLoggedIn(!!token); // true if token exists
+    const checkTokenValidity = () => {
+      const token = localStorage.getItem("token");
+      if (!token) return false;
+  
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const expiry = payload.exp * 1000;
+        return Date.now() < expiry;
+      } catch (e) {
+        return false;
+      }
+    };
+  
+    setIsLoggedIn(checkTokenValidity());
   }, []);
+  
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const expiry = payload.exp * 1000;
+        const timeUntilExpiry = expiry - Date.now();
+  
+        if (timeUntilExpiry > 0) {
+          const timer = setTimeout(() => {
+            handleLogout();
+          }, timeUntilExpiry);
+          return () => clearTimeout(timer);
+        } else {
+          handleLogout();
+        }
+      } catch (e) {
+        handleLogout();
+      }
+    }
+  }, []);
+  
 
   const handleLogout = () => {
     localStorage.removeItem('token');
