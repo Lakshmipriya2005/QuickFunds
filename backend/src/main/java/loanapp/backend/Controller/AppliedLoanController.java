@@ -50,5 +50,6 @@ public List<UserStatusDto> getUsersById(@PathVariable Long id) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Application not found");
         }
     }
+    
 
 }
