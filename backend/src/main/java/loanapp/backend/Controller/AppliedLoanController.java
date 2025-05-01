@@ -12,7 +12,7 @@ import loanapp.backend.Dtos.UserStatusDto;
 import loanapp.backend.Entity.AppliedLoanUsers;
 import loanapp.backend.Service.AppliedUsersService;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
