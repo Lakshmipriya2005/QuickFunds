@@ -44,6 +44,7 @@ public class AuthController {
     @PostMapping("/login")
 public ResponseEntity<?> login(@RequestBody UserDto userDto, HttpServletRequest request) {
     String jwt = userService.authenticate(userDto);
+    System.out.println(jwt);
 
     if (!jwt.equals("fail")) {
         HttpSession session = request.getSession(true); 
