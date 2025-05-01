@@ -93,5 +93,17 @@ public List<UserStatusDto> getUsersById(Long id) {
     
     return dtos;
 }
+public List<UserAppliedDto> getLoanDetails(Long id) {
+    List<AppliedLoanUsers> repositoryList=repository.findAllByUserId(id);
+   List<UserAppliedDto> loanUser=new ArrayList<>();
+   for(AppliedLoanUsers app:repositoryList){
+    loanUser.add(new UserAppliedDto(app.getName(),app.getAmount()));
+    
+
+   }
+   return loanUser;
+
+    
+}
 
 }
