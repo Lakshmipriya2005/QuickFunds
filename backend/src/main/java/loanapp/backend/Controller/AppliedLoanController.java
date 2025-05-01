@@ -14,6 +14,7 @@ import loanapp.backend.Service.AppliedUsersService;
 
 
 
+
 @RestController
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 @RequestMapping("/loan")
@@ -49,12 +50,26 @@ public List<UserStatusDto> getUsersById(@PathVariable Long id) {
         }
     }
     @GetMapping("/getLoanDetails/{id}")
-    public List<UserAppliedDto> getMethodName(Long id) {
+    public List<UserAppliedDto> getMethodName(@PathVariable Long id) {
         // Call the service method to get the loan details for the given ID
        List<UserAppliedDto> loanDetails = service.getLoanDetails(id);
-        
+        System.out.println("Loan details for ID " + id + ": " + loanDetails);
         // Return the loan details as a response
         return loanDetails;
     }
+    @GetMapping("/totalLoanAmount")
+    public Long getAllLoanAmounts() {
+       Long loanAmount=service.getAllLoanAmount();
+       return loanAmount;
+
+
+       
+    }
+    @GetMapping("/getTotalUser")
+    public List<String> getTotalUser() {
+       return service.getUniqueLoanUsers();
+        
+    }
+    
     
 }

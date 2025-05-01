@@ -101,9 +101,27 @@ public List<UserAppliedDto> getLoanDetails(Long id) {
     
 
    }
+   System.out.println("Loan User Details: "+loanUser);
    return loanUser;
 
     
 }
+public Long getAllLoanAmount() {
+    Long totalAmout=repository.findAll().stream()
+            .mapToLong(AppliedLoanUsers::getAmount)
+            .sum();
+    return totalAmout;
+}
+public List<String> getUniqueLoanUsers() {
+    List<AppliedLoanUsers> allUsers=repository.findAll();
+
+    List<String>  totalUsers=new ArrayList<>();
+    for (AppliedLoanUsers user : allUsers) {
+        totalUsers.add(user.getName());
+    }
+    return totalUsers;
+  
+}
+
 
 }
