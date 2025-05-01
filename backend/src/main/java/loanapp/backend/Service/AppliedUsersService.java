@@ -96,11 +96,15 @@ public List<UserStatusDto> getUsersById(Long id) {
 public List<UserAppliedDto> getLoanDetails(Long id) {
     List<AppliedLoanUsers> repositoryList=repository.findAllByUserId(id);
    List<UserAppliedDto> loanUser=new ArrayList<>();
+   System.out.println("Loan User List: "+repositoryList);
+
+   
    for(AppliedLoanUsers app:repositoryList){
     loanUser.add(new UserAppliedDto(app.getName(),app.getAmount()));
     
 
    }
+   System.out.println("loanUser List: "+loanUser);
    return loanUser;
 
     

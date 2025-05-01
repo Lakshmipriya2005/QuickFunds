@@ -12,8 +12,6 @@ import loanapp.backend.Dtos.UserStatusDto;
 import loanapp.backend.Entity.AppliedLoanUsers;
 import loanapp.backend.Service.AppliedUsersService;
 
-import org.springframework.web.bind.annotation.GetMapping;
-
 
 
 
@@ -52,7 +50,7 @@ public List<UserStatusDto> getUsersById(@PathVariable Long id) {
         }
     }
     @GetMapping("/getLoanDetails/{id}")
-    public List<UserAppliedDto> getMethodName(Long id) {
+    public List<UserAppliedDto> getMethodName(@PathVariable Long id) {
         // Call the service method to get the loan details for the given ID
        List<UserAppliedDto> loanDetails = service.getLoanDetails(id);
         
