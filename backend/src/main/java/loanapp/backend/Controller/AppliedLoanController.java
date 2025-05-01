@@ -11,6 +11,7 @@ import loanapp.backend.Dtos.UserAppliedDto;
 import loanapp.backend.Dtos.UserStatusDto;
 import loanapp.backend.Entity.AppliedLoanUsers;
 import loanapp.backend.Service.AppliedUsersService;
+
 import org.springframework.web.bind.annotation.GetMapping;
 
 
@@ -50,6 +51,13 @@ public List<UserStatusDto> getUsersById(@PathVariable Long id) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Application not found");
         }
     }
+    @GetMapping("/getLoanDetails/{id}")
+    public List<UserAppliedDto> getMethodName(Long id) {
+        // Call the service method to get the loan details for the given ID
+       List<UserAppliedDto> loanDetails = service.getLoanDetails(id);
+        
+        // Return the loan details as a response
+        return loanDetails;
+    }
     
-
 }
