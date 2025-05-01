@@ -104,7 +104,7 @@ const DefaultProfile = () => {
     const userId = localStorage.getItem('userid');
 
     try {
-      const response = await fetch(`http://localhost:8080/loans/${userId}`, {
+      const response = await fetch(`http://localhost:8080/loans/getLoanDetails/${userId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
