@@ -10,6 +10,7 @@ const DefaultProfile = () => {
   const [loading, setLoading] = useState(true);
   const [isEditMode, setIsEditMode] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
+
   const [profileData, setProfileData] = useState({
     name: '',
     email: '',
@@ -104,7 +105,7 @@ const DefaultProfile = () => {
     const userId = localStorage.getItem('userid');
 
     try {
-      const response = await fetch(`http://localhost:8080/loans/user/${userId}`, {
+      const response = await fetch(`http://localhost:8080/loans/getLoanDetails/${userId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -115,6 +116,7 @@ const DefaultProfile = () => {
       if (response.status === 200) {
         const data = await response.json();
         setLoans(data);
+        console.log(data);
         
         // Calculate total loan amount
         const total = data.reduce((sum, loan) => sum + parseFloat(loan.amount || 0), 0);
