@@ -22,7 +22,7 @@ public class UserAppliedDto {
     private int amount;
     private String property;
     private long userId;
-    UserAppliedDto(String name,int amount){
+    public UserAppliedDto(String name,int amount){
         this.name=name;
         this.amount=amount;
 
