@@ -41,7 +41,7 @@ public class SecurityConfig {
         return http.csrf(customizer -> customizer.disable()).
         cors(Customizer.withDefaults()).
                 authorizeHttpRequests(request -> request
-                        .requestMatchers("/auth/**","loan/updateStatus/**","/loan/status/**").permitAll()
+                        .requestMatchers("/auth/**","/loan/updateStatus/**","/loan/status/**","/loan/getTotalUser/**").permitAll()
                         .anyRequest().authenticated()).
                 httpBasic(customizer->customizer.disable()).
                 sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

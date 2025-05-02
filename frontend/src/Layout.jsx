@@ -11,13 +11,16 @@ export default function Layout({ children }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const userMenuRef = useRef(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  //const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
+
+// Log the admin status for debugging
 
   useEffect(() => {
     const checkTokenValidity = () => {
       const token = localStorage.getItem("token");
-      if (!token) return false;
+       // Log the admin status for debugging
+      if (!token ) return false;
   
       try {
         const payload = JSON.parse(atob(token.split('.')[1]));
@@ -29,6 +32,7 @@ export default function Layout({ children }) {
     };
   
     setIsLoggedIn(checkTokenValidity());
+    
   }, []);
   
   useEffect(() => {
@@ -53,11 +57,16 @@ export default function Layout({ children }) {
     }
   }, []);
   
+  const handleLoginClick = () => {
+    setIsUserMenuOpen(false);
+    localStorage.removeItem('admin');
+  }
 
   const handleLogout = () => {
     localStorage.removeItem('token');
      // Remove token from local storage
      localStorage.removeItem('userid'); // Remove userId from local storage
+      // Remove admin status from local storage
     setIsLoggedIn(false);
     setIsUserMenuOpen(false);
     navigate("/login");
@@ -70,6 +79,7 @@ export default function Layout({ children }) {
         setIsUserMenuOpen(false);
       }
     }
+    
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -108,7 +118,7 @@ export default function Layout({ children }) {
               {/* Dropdown menu */}
               {isUserMenuOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-xl py-1 z-50 border border-gray-100 animate-fadeIn">
-                 {isLoggedIn ? (
+                 {isLoggedIn  ? (
                       <Link
                         to="/profile"
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 flex items-center"
@@ -134,7 +144,7 @@ export default function Layout({ children }) {
                     <Link
                       to="/login"
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 flex items-center"
-                      onClick={() => setIsUserMenuOpen(false)}
+                      onClick={handleLoginClick}
                     >
                       <LogIn className="h-4 w-4 mr-2" /> Login
                     </Link>

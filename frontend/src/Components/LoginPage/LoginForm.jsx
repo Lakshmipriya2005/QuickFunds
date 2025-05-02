@@ -16,8 +16,9 @@ function LoginForm({ switchToRegister }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    if (username === "admin" && password === "admin") {
-      navigate("/Dashboard");
+    if (username === 'admin' && password === 'admin') {
+    // clear token if switching from user to admin
+      navigate('/Dashboard');
     } else {
       try {
         const response = await axios.post(
@@ -39,6 +40,7 @@ function LoginForm({ switchToRegister }) {
         localStorage.setItem('token', token);
         localStorage.setItem('userid', userId); // Store the user ID in local storage
         console.log("Token:", token); // Log the token for debugging
+       
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         navigate("/");
       } else {

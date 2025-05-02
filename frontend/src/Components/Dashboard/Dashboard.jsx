@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Search, LogOut, User } from 'lucide-react';
 import logo from '../../assets/logo.jpg'; 
@@ -8,7 +8,7 @@ import oscar from '../../assets/oscar.jpg'; // Adjust the path to your logo
 import daniel from '../../assets/daniel.jpg'; // Adjust the path to your logo
 import danielJay from '../../assets/danielJay.jpeg'; // Adjust the path to your logo
 import mark from '../../assets/mark.jpg'; // Adjust the path to your logo
-
+import axios from 'axios';
 
 // Mock data for charts
 const lineChartData = [
@@ -47,7 +47,7 @@ const userDetails = [
 ];
 
 // Top users to display in the users widget
-const topUsers = userDetails.slice(0, 5);
+
 
 function Dashboard() {
   // State to control the dropdown visibility
@@ -62,6 +62,35 @@ function Dashboard() {
   const closeDropdown = () => {
     setShowDropdown(false);
   };
+  const [topUsers, setTopUsers] = useState([]);
+
+  useEffect(()=>{
+    const fetchProfile = async () => {
+      // const token = localStorage.getItem('token');
+      // const userId = localStorage.getItem('userid');
+      // console.log(userId);
+  
+      try {
+        // Replace with your actual API endpoint
+        const response = await axios.get('http://localhost:8080/loan/getTotalUser');
+        
+        setTopUsers(response.data);
+
+       // console.log('Status data fetched:', response.data);
+       
+      } catch (err) {
+        
+        console.error('Error fetching status data:', err);
+        
+        // Temporary mock data for development
+      
+      } finally {
+        //console.log('top data:', topUsers);
+      }
+    };
+    fetchProfile();
+
+  },[])
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100" onClick={closeDropdown}>
@@ -95,10 +124,7 @@ function Dashboard() {
               {/* Dropdown menu */}
               {showDropdown && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-10 border border-gray-100">
-                  <Link to="/profile" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">
-                    <User className="w-4 h-4 mr-2 text-blue-500" />
-                    Profile
-                  </Link>
+                  
                   <hr className="my-1 border-gray-100" />
                   <Link to="/login" className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">
                     <LogOut className="w-4 h-4 mr-2 text-blue-500" />
@@ -205,22 +231,12 @@ function Dashboard() {
               <button className="text-xs text-blue-600 font-medium">View All</button>
             </div>
             <div className="space-y-5">
-              {topUsers.map((user, index) => (
-                <div key={index} className="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-all duration-200">
-                  <img 
-                    src={user.avatar} 
-                    alt={user.name} 
-                    className="w-12 h-12 rounded-full mr-4 border-2 border-blue-100" 
-                  />
-                  <div className="flex-grow">
-                    <p className="text-sm font-semibold text-gray-800">{user.name}</p>
-                    <p className="text-xs text-gray-500">{user.email}</p>
-                  </div>
-                  <div className={`text-sm font-bold ${user.loanPaid.startsWith('+') ? 'text-green-600' : 'text-red-600'}`}>
-                    {user.loanPaid}
-                  </div>
+            {topUsers.map((name, index) => (
+                <div key={index} className="p-3 border rounded-md shadow-sm">
+                  <p className="text-gray-800 font-semibold">{name}</p>
                 </div>
               ))}
+
             </div>
           </div>
         </div>
