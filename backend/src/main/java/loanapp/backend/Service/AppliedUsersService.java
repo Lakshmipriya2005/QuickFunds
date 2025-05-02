@@ -112,15 +112,18 @@ public Long getAllLoanAmount() {
     Long totalAmout=repository.findAll().stream()
             .mapToLong(AppliedLoanUsers::getAmount)
             .sum();
+    System.out.println("Total Amount: "+totalAmout);
     return totalAmout;
 }
 public List<String> getUniqueLoanUsers() {
+
     return repository.findAll().stream()
     .sorted((u1, u2) -> Long.compare(u2.getAmount(), u1.getAmount()))
     .limit(5)
     .map(AppliedLoanUsers::getName)
     .collect(Collectors.toList());
   
+
 }
 
 }
