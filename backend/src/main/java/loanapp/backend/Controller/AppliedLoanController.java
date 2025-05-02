@@ -53,9 +53,9 @@ public List<UserStatusDto> getUsersById(@PathVariable Long id) {
     public List<UserAppliedDto> getMethodName(@PathVariable Long id) {
         // Call the service method to get the loan details for the given ID
        List<UserAppliedDto> loanDetails = service.getLoanDetails(id);
-        System.out.println("Loan details for ID " + id + ": " + loanDetails);
+        
         // Return the loan details as a response
-        return loanDetails;
+        return loanDetails; 
     }
     @GetMapping("/totalLoanAmount")
     public Long getAllLoanAmounts() {

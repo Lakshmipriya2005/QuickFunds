@@ -108,13 +108,20 @@ export default function Layout({ children }) {
               {/* Dropdown menu */}
               {isUserMenuOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-xl py-1 z-50 border border-gray-100 animate-fadeIn">
-                  <Link
-                    to="/profile"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 flex items-center"
-                    onClick={() => setIsUserMenuOpen(false)}
-                  >
-                    <UserCircle className="h-4 w-4 mr-2" /> Profile
-                  </Link>
+                 {isLoggedIn ? (
+                      <Link
+                        to="/profile"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 flex items-center"
+                        onClick={() => setIsUserMenuOpen(false)}
+                      >
+                        <UserCircle className="h-4 w-4 mr-2" /> Profile
+                      </Link>
+                    ) : (
+                      <div className="block px-4 py-2 text-sm text-gray-400 cursor-not-allowed flex items-center">
+                        <UserCircle className="h-4 w-4 mr-2" /> Profile
+                      </div>
+                    )}
+
 
                   {isLoggedIn ? (
                     <button

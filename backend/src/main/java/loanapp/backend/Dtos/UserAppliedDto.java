@@ -22,11 +22,17 @@ public class UserAppliedDto {
     private int amount;
     private String property;
     private long userId;
-    public UserAppliedDto(String name,int amount){
+    UserAppliedDto(String name,int amount){
         this.name=name;
         this.amount=amount;
 
     }
+    public UserAppliedDto(String name, int amount, String status) {
+        this.name = name;
+        this.amount = amount;
+        this.status = status;
+    }
+    
     
 
     
