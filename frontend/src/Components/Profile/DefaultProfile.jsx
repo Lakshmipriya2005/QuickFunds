@@ -104,16 +104,18 @@ const DefaultProfile = () => {
     const userId = localStorage.getItem('userid');
 
     try {
-      const response = await fetch(`http://localhost:8080/loans/getLoanDetails/${userId}`, {
+      const response = await fetch(`http://localhost:8080/loan/getLoanDetails/${userId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`,
         },
       });
+      
 
       if (response.status === 200) {
         const data = await response.json();
+        console.log(data);
         setLoans(data);
         
         // Calculate total loan amount
@@ -252,12 +254,13 @@ const DefaultProfile = () => {
 
   // Format currency
   const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-US', {
+    return new Intl.NumberFormat('en-IN', {
       style: 'currency',
-      currency: 'USD',
+      currency: 'INR',
       minimumFractionDigits: 2
     }).format(amount);
   };
+  
 
   if (loading) {
     return (
@@ -490,25 +493,28 @@ const DefaultProfile = () => {
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                      {loans.map((loan, index) => (
-                        <tr key={index}>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            {loan.loanType || 'Personal Loan'}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {formatCurrency(loan.amount || 0)}
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm">
-                            <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                              ${loan.status === 'APPROVED' ? 'bg-green-100 text-green-800' : 
-                              loan.status === 'PENDING' ? 'bg-yellow-100 text-yellow-800' : 
-                              'bg-red-100 text-red-800'}`}>
-                              {loan.status || 'PENDING'}
-                            </span>
-                          </td>
-                        </tr>
+                      {loans
+                        .filter(loan => loan.status === "Approved") 
+                        .map((loan, index) => (
+                          <tr key={index}>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                              {loan.name || 'Personal Loan'}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                              {formatCurrency(loan.amount || 0)}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm">
+                              <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                ${loan.status === "Approved" ? 'bg-green-100 text-green-800' : 
+                                loan.status === 'PENDING' ? 'bg-yellow-100 text-yellow-800' : 
+                                'bg-red-100 text-red-800'}`}>
+                                {loan.status || 'PENDING'}
+                              </span>
+                            </td>
+                          </tr>
                       ))}
                     </tbody>
+
                   </table>
                 </div>
               ) : (

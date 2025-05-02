@@ -100,7 +100,7 @@ public List<UserAppliedDto> getLoanDetails(Long id) {
 
    
    for(AppliedLoanUsers app:repositoryList){
-    loanUser.add(new UserAppliedDto(app.getName(),app.getAmount()));
+    loanUser.add(new UserAppliedDto(app.getName(),app.getAmount(),app.getStatus()));
     
 
    }
