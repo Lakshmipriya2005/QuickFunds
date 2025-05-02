@@ -10,17 +10,17 @@ import org.springframework.stereotype.Service;
 import loanapp.backend.Dtos.UserAppliedDto;
 import loanapp.backend.Dtos.UserStatusDto;
 import loanapp.backend.Entity.AppliedLoanUsers;
-import loanapp.backend.Entity.UserEntity;
+
 import loanapp.backend.Repo.AppliedUsersRepo;
-import loanapp.backend.Repo.UserRepository;
+//import loanapp.backend.Repo.UserRepository;
 
 @Service
 public class AppliedUsersService {
 
     @Autowired
     private AppliedUsersRepo repository;
-    @Autowired
-    private UserRepository userRepository; // Assuming you have a UserRepository to fetch UserEntity
+    // @Autowired
+    // private UserRepository userRepository; // Assuming you have a UserRepository to fetch UserEntity
 
     // @Autowired
     // private UserRepository userRepository; // Assuming you have a UserRepository to fetch UserEntity
