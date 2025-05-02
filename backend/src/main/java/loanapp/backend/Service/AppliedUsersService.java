@@ -116,14 +116,14 @@ public Long getAllLoanAmount() {
     return totalAmout;
 }
 public List<String> getUniqueLoanUsers() {
-    List<AppliedLoanUsers> allUsers=repository.findAll();
 
-    List<String>  totalUsers=new ArrayList<>();
-    for (AppliedLoanUsers user : allUsers) {
-        totalUsers.add(user.getName());
-    }
-    return totalUsers;
+    return repository.findAll().stream()
+    .sorted((u1, u2) -> Long.compare(u2.getAmount(), u1.getAmount()))
+    .limit(5)
+    .map(AppliedLoanUsers::getName)
+    .collect(Collectors.toList());
+  
+
 }
-
 
 }
