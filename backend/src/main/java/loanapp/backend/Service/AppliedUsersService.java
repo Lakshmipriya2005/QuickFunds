@@ -108,6 +108,7 @@ public List<UserAppliedDto> getLoanDetails(Long id) {
 
     
 }
+
 public Long getAllLoanAmount() {
     Long totalAmout=repository.findAll().stream()
             .mapToLong(AppliedLoanUsers::getAmount)
@@ -115,6 +116,7 @@ public Long getAllLoanAmount() {
     System.out.println("Total Amount: "+totalAmout);
     return totalAmout;
 }
+
 public List<String> getUniqueLoanUsers() {
     List<AppliedLoanUsers> allUsers=repository.findAll();
 
