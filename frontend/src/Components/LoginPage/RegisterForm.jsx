@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import logo from '../../assets/logo.jpg'; // Adjust the path to your logo image
 function RegisterForm({ switchToLogin }) {
-
+  const [fullname, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -89,6 +89,28 @@ function RegisterForm({ switchToLogin }) {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
+      <div>
+          <label htmlFor="regUsername" className="block text-sm font-medium text-gray-700 mb-2">
+            Full Name
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <input
+              type="text"
+              id="regUsername"
+              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
+              placeholder="Enter your Full Name"
+              value={fullname}
+              onChange={(e) => setFullName(e.target.value)}
+              required
+            />
+          </div>
+        </div>
+
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
             Email Address
