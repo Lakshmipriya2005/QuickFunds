@@ -232,9 +232,18 @@ function Dashboard() {
             </div>
             <div className="space-y-5">
             {topUsers.map((name, index) => (
-                <div key={index} className="p-3 border rounded-md shadow-sm">
-                  <p className="text-gray-800 font-semibold">{name}</p>
-                </div>
+                 <div key={index} className="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-all duration-200">
+                 <img 
+                   src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png "
+                   alt={name} 
+                   className="w-12 h-12 rounded-full mr-4 border-2 border-blue-100" 
+                 />
+                 <div className="flex-grow">
+                   <p className="text-sm font-semibold text-gray-800">{name}</p>
+                   
+                 </div>
+                
+               </div>
               ))}
 
             </div>
