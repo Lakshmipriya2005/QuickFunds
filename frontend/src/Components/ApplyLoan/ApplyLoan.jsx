@@ -39,7 +39,7 @@ useEffect(() => {
       const token = localStorage.getItem("token");
       const userId = localStorage.getItem("userid");
 
-      const response = await fetch(`http://localhost:8080/user/${userId}`, {
+      const response = await fetch(`http://localhost:8080/auth/getUser/${userId}`, {
         headers: {
           "Authorization": `Bearer ${token}`,
         },
