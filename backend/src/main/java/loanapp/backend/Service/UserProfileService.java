@@ -17,8 +17,8 @@ public class UserProfileService {
     @Autowired
     private UserProfileRepo userProfileRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    // @Autowired
+    // private UserRepository userRepository;
 
  
 
@@ -64,8 +64,8 @@ public class UserProfileService {
         // Fetch profile details including default profile values
         public UserProfileDto getProfileByUserId(Long userId) {
             // Fetch the user along with profile eagerly
-           // UserEntity user = userRepository.findById(userId)
-                  //  .orElseThrow(() -> new RuntimeException("User not found"));
+            // UserEntity user = userRepository.findById(userId)
+            //         .orElseThrow(() -> new RuntimeException("User not found"));
     
             Optional<UserProfile> userProfile = userProfileRepository.findByRefId(userId); // Profile is fetched eagerly here
     
