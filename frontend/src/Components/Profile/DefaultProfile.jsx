@@ -105,7 +105,7 @@ const DefaultProfile = () => {
     const userId = localStorage.getItem('userid');
 
     try {
-      const response = await fetch(`http://localhost:8080/loans/user/${userId}`, {
+      const response = await fetch(`http://localhost:8080/loan/getLoanDetails/${userId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -293,7 +293,7 @@ const DefaultProfile = () => {
                     className={`relative w-32 h-32 rounded-full border-4 border-white shadow-lg overflow-hidden ${isEditMode ? 'cursor-pointer' : ''}`}
                   >
                     <img 
-                      src={imagePreview || profileData.profileImage} 
+                      src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
                       alt="Profile" 
                       className="w-full h-full object-cover bg-white"
                     />
