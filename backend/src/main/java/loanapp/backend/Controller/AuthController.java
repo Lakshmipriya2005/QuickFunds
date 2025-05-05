@@ -1,7 +1,7 @@
 package loanapp.backend.Controller;
 
 import java.util.HashMap;
-import java.util.List;
+
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.RestController;
 
 import loanapp.backend.Dtos.UserDto;
-import loanapp.backend.Entity.UserEntity;
+
 import loanapp.backend.Repo.UserRepository;
 import loanapp.backend.Service.UserService;
 

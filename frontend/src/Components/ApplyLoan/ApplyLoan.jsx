@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import Layout from "../../Layout"
 import { useNavigate } from 'react-router-dom';
 
@@ -31,6 +31,37 @@ export default function LoanApplicationForm() {
     const value = Number.parseInt(e.target.value) || 0
     setFormData((prev) => ({ ...prev, amount: value }))
   }
+ 
+
+useEffect(() => {
+  const fetchUserData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const userId = localStorage.getItem("userid");
+
+      const response = await fetch(`http://localhost:8080/auth/getUser/${userId}`, {
+        headers: {
+          "Authorization": `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) throw new Error("Failed to fetch user data");
+
+      const data = await response.json();
+
+      setFormData((prev) => ({
+        ...prev,
+        name: data.username,
+        email: data.email,
+      }));
+    } catch (error) {
+      console.error("User fetch error:", error);
+    }
+  };
+
+  fetchUserData();
+}, []);
+
 
   const handleReset = () => {
     setFormData({
@@ -103,7 +134,7 @@ export default function LoanApplicationForm() {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                    className="w-full px-4 py-3 border border-gray-300 bg-gray-100 rounded-lg cursor-not-allowed"
                     required
                   />
                 </div>
@@ -118,7 +149,7 @@ export default function LoanApplicationForm() {
                     type="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                    className="w-full px-4 py-3 border border-gray-300 bg-gray-100 rounded-lg cursor-not-allowed"
                     required
                   />
                 </div>

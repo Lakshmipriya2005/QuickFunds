@@ -3,7 +3,6 @@ package loanapp.backend.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -41,8 +40,7 @@ public class SecurityConfig {
         return http.csrf(customizer -> customizer.disable()).
         cors(Customizer.withDefaults()).
                 authorizeHttpRequests(request -> request
-                .requestMatchers("/auth/**", "/loan/status*", "/loan/updatestatus/**").permitAll()
-
+                        .requestMatchers("/auth/**","/loan/updateStatus/**","/loan/status/**","/loan/getTotalUser/**").permitAll()
                         .anyRequest().authenticated()).
                 httpBasic(customizer->customizer.disable()).
                 sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
