@@ -60,6 +60,7 @@ public List<UserStatusDto> getUsersById(@PathVariable Long id) {
     @GetMapping("/totalLoanAmount")
     public Long getAllLoanAmounts() {
        Long loanAmount=service.getAllLoanAmount();
+       System.out.println("Loan Amount: " + loanAmount);
        return loanAmount;
 
 

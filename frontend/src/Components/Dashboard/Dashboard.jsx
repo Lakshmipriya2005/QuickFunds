@@ -63,6 +63,8 @@ function Dashboard() {
     setShowDropdown(false);
   };
   const [topUsers, setTopUsers] = useState([]);
+  const [client, setClient] = useState(0);
+  const [totalLoanAmount, setTotalLoanAmount] = useState(0);
 
   useEffect(()=>{
     const fetchProfile = async () => {
@@ -73,9 +75,10 @@ function Dashboard() {
       try {
         // Replace with your actual API endpoint
         const response = await axios.get('http://localhost:8080/loan/getTotalUser');
-        
+        const response1 = await axios.get('http://localhost:8080/loan/totalLoanAmount');
+        setTotalLoanAmount(response1.data);
         setTopUsers(response.data);
-
+        setClient(response.data.length);
        // console.log('Status data fetched:', response.data);
        
       } catch (err) {
@@ -153,7 +156,7 @@ function Dashboard() {
           {/* Client Card */}
           <div className="bg-gradient-to-br from-white to-gray-50 p-8 rounded-xl border border-gray-100 shadow-md hover:shadow-lg transition-all duration-300">
             <h2 className="text-sm font-medium text-gray-500 mb-2 uppercase tracking-wider">Client</h2>
-            <div className="text-4xl font-bold mb-3 text-blue-800">101</div>
+            <div className="text-4xl font-bold mb-3 text-blue-800">{client}</div>
             <p className="text-sm text-green-600 font-medium flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M12 7a1 1 0 11-2 0 1 1 0 012 0zm-1 13a1 1 0 100-2 1 1 0 000 2zm7-13a1 1 0 10-2 0 1 1 0 002 0zM7 7a1 1 0 11-2 0 1 1 0 012 0zm13 6a1 1 0 10-2 0 1 1 0 002 0zM16 7a1 1 0 11-2 0 1 1 0 012 0zM9 20a1 1 0 100-2 1 1 0 000 2zM7 13a1 1 0 11-2 0 1 1 0 012 0zM7 19a1 1 0 11-2 0 1 1 0 012 0z" clipRule="evenodd" />
@@ -165,7 +168,7 @@ function Dashboard() {
           {/* Loan Distributed Card */}
           <div className="bg-gradient-to-br from-white to-gray-50 p-8 rounded-xl border border-gray-100 shadow-md hover:shadow-lg transition-all duration-300">
             <h2 className="text-sm font-medium text-gray-500 mb-2 uppercase tracking-wider">Loan Distributed</h2>
-            <div className="text-4xl font-bold mb-3 text-blue-800">₹1,000,000,000</div>
+            <div className="text-4xl font-bold mb-3 text-blue-800">{totalLoanAmount}</div>
             <p className="text-sm text-green-600 font-medium flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M12 7a1 1 0 11-2 0 1 1 0 012 0zm-1 13a1 1 0 100-2 1 1 0 000 2zm7-13a1 1 0 10-2 0 1 1 0 002 0zM7 7a1 1 0 11-2 0 1 1 0 012 0zm13 6a1 1 0 10-2 0 1 1 0 002 0zM16 7a1 1 0 11-2 0 1 1 0 012 0zM9 20a1 1 0 100-2 1 1 0 000 2zM7 13a1 1 0 11-2 0 1 1 0 012 0zM7 19a1 1 0 11-2 0 1 1 0 012 0z" clipRule="evenodd" />
@@ -177,7 +180,7 @@ function Dashboard() {
           {/* Loan Collected Card */}
           <div className="bg-gradient-to-br from-white to-gray-50 p-8 rounded-xl border border-gray-100 shadow-md hover:shadow-lg transition-all duration-300">
             <h2 className="text-sm font-medium text-gray-500 mb-2 uppercase tracking-wider">Loan Collected</h2>
-            <div className="text-4xl font-bold mb-3 text-blue-800">₹600,000</div>
+            <div className="text-4xl font-bold mb-3 text-blue-800">{totalLoanAmount}</div>
             <p className="text-sm text-green-600 font-medium flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M12 7a1 1 0 11-2 0 1 1 0 012 0zm-1 13a1 1 0 100-2 1 1 0 000 2zm7-13a1 1 0 10-2 0 1 1 0 002 0zM7 7a1 1 0 11-2 0 1 1 0 012 0zm13 6a1 1 0 10-2 0 1 1 0 002 0zM16 7a1 1 0 11-2 0 1 1 0 012 0zM9 20a1 1 0 100-2 1 1 0 000 2zM7 13a1 1 0 11-2 0 1 1 0 012 0zM7 19a1 1 0 11-2 0 1 1 0 012 0z" clipRule="evenodd" />
