@@ -53,7 +53,7 @@ export default function LoanApplicationForm() {
         }
 
         console.log("Fetching user data...");
-        const response = await fetch(`http://localhost:8080/auth/getUser/${userId}`, {
+        const response = await fetch(`http://localhost:8080/profile/get/${userId}`, {
           headers: {
             "Authorization": `Bearer ${token}`,
           },
