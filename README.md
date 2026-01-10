@@ -31,13 +31,13 @@ User → Loan Form → Application API → Database → Approval Status
 ## 💻 Tech Stack
 
 **Frontend:**  
-- HTML, CSS, JavaScript *(or React if applicable)*
+- React
 
 **Backend:**  
-- Spring Boot *(or PHP / Node depending on your actual backend — tell me if you want it adjusted)*
+- Spring Boot 
 
 **Database:**  
-- MySQL / PostgreSQL
+- MySQL
 
 **Authentication:**  
 - Session / JWT-based authentication
