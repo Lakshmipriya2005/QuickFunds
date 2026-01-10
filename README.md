@@ -55,7 +55,7 @@ User → Loan Form → Application API → Database → Approval Status
 
 ---
 
-## 📸 Screenshots (Optional)
+## 📸 Screenshots 
 
 > Add screenshots for better portfolio impact  
 > Example:
