@@ -59,3 +59,5 @@ User → Loan Form → Application API → Database → Approval Status
 
 > Add screenshots for better portfolio impact  
 > Example:
+> <img width="1915" height="957" alt="image" src="https://github.com/user-attachments/assets/0f7921f9-5c5f-40a7-a563-4e84d789d3ea" />
+
